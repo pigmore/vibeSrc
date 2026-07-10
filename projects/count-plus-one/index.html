@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Count +1 — vibeSrc</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        place-items: center;
+        color: #fff7ed;
+        background:
+          radial-gradient(circle at 20% 10%, rgba(251, 146, 60, 0.38), transparent 28rem),
+          radial-gradient(circle at 80% 90%, rgba(244, 63, 94, 0.28), transparent 28rem),
+          #1c1917;
+      }
+
+      main {
+        width: min(560px, calc(100% - 32px));
+        padding: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.08);
+        text-align: center;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+      }
+
+      a {
+        color: #fed7aa;
+        font-weight: 800;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2.3rem, 10vw, 4.6rem);
+        line-height: 1;
+        letter-spacing: -0.07em;
+      }
+
+      p {
+        color: #fed7aa;
+        font-size: 1.05rem;
+        line-height: 1.65;
+      }
+
+      .counter {
+        display: grid;
+        gap: 18px;
+        justify-items: center;
+        margin-top: 28px;
+      }
+
+      output {
+        min-width: 150px;
+        padding: 16px 24px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.14);
+        font-size: 4rem;
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      button {
+        min-height: 52px;
+        padding: 0 24px;
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #fb923c, #f43f5e);
+        color: #1c1917;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 950;
+        transition: transform 140ms ease, filter 140ms ease;
+      }
+
+      button:hover,
+      button:focus-visible {
+        transform: translateY(-2px);
+        filter: brightness(1.08);
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p><a href="../">← All projects</a></p>
+      <h1>Count +1</h1>
+      <p>One button, one piece of state, and one DOM update. Pure vanilla JavaScript.</p>
+
+      <section class="counter" aria-label="Counter demo">
+        <output id="count" aria-live="polite">0</output>
+        <button id="increment" type="button">Count +1</button>
+      </section>
+    </main>
+
+    <script>
+      let count = 0;
+      const countOutput = document.querySelector("#count");
+      const incrementButton = document.querySelector("#increment");
+
+      incrementButton.addEventListener("click", () => {
+        count += 1;
+        countOutput.value = count;
+        countOutput.textContent = String(count);
+      });
+    </script>
+  </body>
+</html>

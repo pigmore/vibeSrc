@@ -8,12 +8,19 @@ This file records the intended structure of `vibeSrc`. Keep it updated when fold
 vibeSrc/
   LICENSE
   README.md
+  index.html
   rules.md
   tech-principle.md
   coding.md
   filePath.md
   promptRecord.md
   roadmap.md
+  projects/
+    index.html
+    hello-world/
+      index.html
+    count-plus-one/
+      index.html
 ```
 
 ## Planned structure
@@ -60,6 +67,8 @@ vibeSrc/
 | `filePath.md` | Repository map | Update on structure changes. |
 | `promptRecord.md` | Prompt and decision log | Append important AI prompts and outcomes. |
 | `roadmap.md` | Startup roadmap | Track phases and feature ideas. |
+| `index.html` | Static welcome page | Entry point for visitors and demo links. |
+| `projects/` | Static vanilla JavaScript demos | One folder per demo project. |
 | `src/features/` | Main feature library | One folder per feature. |
 | `docs/decisions/` | Architecture decision records | Use for non-trivial stack choices. |
 

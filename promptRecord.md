@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — add static welcome and vanilla demos
+
+- **Goal:** Add a simple browser entry point and first demo projects.
+- **Prompt:** "gen a index html to welcome the users and projects folder with two simple demo a hello world and a count +1 vanillajs"
+- **Context files:** `README.md`, `coding.md`, `filePath.md`, `promptRecord.md`.
+- **Decision:** Keep the first implementation framework-free with static HTML, CSS, and vanilla JavaScript.
+- **Changed files:** `index.html`, `projects/index.html`, `projects/hello-world/index.html`, `projects/count-plus-one/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Serve the repo with `python3 -m http.server` and request the static pages.
+- **Follow-ups:** Choose whether future demos stay vanilla or move into a formal Vite/TypeScript app scaffold.
+
 ## 2026-07-10 — initialize startup docs
 
 - **Goal:** Create initial open-source frontend project guide files.
