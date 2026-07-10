@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — correct OBJ viewer vertical orbit direction
+
+- **Goal:** Make vertical drag behavior match the viewer's horizontal drag behavior.
+- **Prompt:** "rotate the viewer left right is correct, up and down is wrong, please fix"
+- **Context files:** `projects/ecs-obj-editor/index.html`.
+- **Decision:** Reverse only the vertical pointer delta applied to camera pitch; leave the horizontal yaw mapping unchanged.
+- **Changed files:** `projects/ecs-obj-editor/index.html`, `promptRecord.md`.
+- **Verification:** Load the WebGL editor in a browser, dispatch a vertical pointer drag, confirm the corrected pitch expression is active, and inspect the console for runtime errors.
+- **Follow-ups:** Keep orbit control conventions consistent if touch, keyboard, or trackball controls are introduced.
+
 ## 2026-07-10 — add OBJ ECS editor demo
 
 - **Goal:** Build a NodeNote-style standalone project for editing OBJ meshes in 3D.
