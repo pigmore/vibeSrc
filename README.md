@@ -28,6 +28,26 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 - [`projects/hello-world/`](./projects/hello-world/) — writes a friendly greeting with plain JS.
 - [`projects/count-plus-one/`](./projects/count-plus-one/) — increments a counter by one on each click.
 
+## Run the local web server
+
+This repo includes a tiny standard-library Python web server, so no dependency install is required:
+
+```bash
+npm run serve
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8080/
+```
+
+For LAN testing from another device on the same network:
+
+```bash
+npm run serve:lan
+```
+
 ## Current status
 
 Foundation docs and the first static vanilla JavaScript demos are initialized. The next step is to choose the long-term frontend stack or keep expanding the framework-free demo library.

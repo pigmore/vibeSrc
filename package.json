@@ -1,0 +1,11 @@
+{
+  "name": "vibesrc",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A vibe-coding open-source frontend demo library.",
+  "scripts": {
+    "serve": "python3 scripts/serve.py",
+    "serve:lan": "python3 scripts/serve.py --host 0.0.0.0 --port 8080",
+    "start": "python3 scripts/serve.py"
+  }
+}

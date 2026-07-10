@@ -9,6 +9,7 @@ vibeSrc/
   LICENSE
   README.md
   index.html
+  package.json
   rules.md
   tech-principle.md
   coding.md
@@ -21,6 +22,8 @@ vibeSrc/
       index.html
     count-plus-one/
       index.html
+  scripts/
+    serve.py
 ```
 
 ## Planned structure
@@ -69,6 +72,8 @@ vibeSrc/
 | `roadmap.md` | Startup roadmap | Track phases and feature ideas. |
 | `index.html` | Static welcome page | Entry point for visitors and demo links. |
 | `projects/` | Static vanilla JavaScript demos | One folder per demo project. |
+| `package.json` | Convenience scripts | Runs the Python static server through npm scripts. |
+| `scripts/serve.py` | Local static web server | Uses Python standard library, no dependencies. |
 | `src/features/` | Main feature library | One folder per feature. |
 | `docs/decisions/` | Architecture decision records | Use for non-trivial stack choices. |
 

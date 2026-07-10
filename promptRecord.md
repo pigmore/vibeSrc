@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — add local static web server
+
+- **Goal:** Make the static demo site easy to run from the repository.
+- **Prompt:** "setup web server"
+- **Context files:** `README.md`, `filePath.md`, existing static demo pages.
+- **Decision:** Add a no-dependency Python standard-library server and npm convenience scripts.
+- **Changed files:** `scripts/serve.py`, `package.json`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Start the server and request the homepage/project demo routes over HTTP.
+- **Follow-ups:** If this becomes a packaged app, replace the helper with a Vite or framework-specific dev server.
+
 ## 2026-07-10 — add static welcome and vanilla demos
 
 - **Goal:** Add a simple browser entry point and first demo projects.
