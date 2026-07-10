@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — add NodeNote as project submodule
+
+- **Goal:** Treat the existing NodeNote vanilla JavaScript repo as a vibeSrc project.
+- **Prompt:** "https://github.com/pigmore/nodeNote is one of my vanillajs demo, treat it as a project and a github submoudule"
+- **Context files:** `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `projects/nodeNote/README.md`.
+- **Decision:** Add `pigmore/nodeNote` as a Git submodule at `projects/nodeNote` and link it from the project listings.
+- **Changed files:** `.gitmodules`, `projects/nodeNote`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Initialize the submodule and request the NodeNote route through the local static server.
+- **Follow-ups:** Keep the submodule pinned intentionally; update it with `git submodule update --remote projects/nodeNote` when NodeNote should advance.
+
 ## 2026-07-10 — add local static web server
 
 - **Goal:** Make the static demo site easy to run from the repository.

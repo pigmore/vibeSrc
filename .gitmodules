@@ -1,0 +1,3 @@
+[submodule "projects/nodeNote"]
+	path = projects/nodeNote
+	url = https://github.com/pigmore/nodeNote.git

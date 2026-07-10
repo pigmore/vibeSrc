@@ -22,6 +22,7 @@ vibeSrc/
       index.html
     count-plus-one/
       index.html
+    nodeNote/                 # Git submodule: https://github.com/pigmore/nodeNote
   scripts/
     serve.py
 ```
@@ -72,6 +73,7 @@ vibeSrc/
 | `roadmap.md` | Startup roadmap | Track phases and feature ideas. |
 | `index.html` | Static welcome page | Entry point for visitors and demo links. |
 | `projects/` | Static vanilla JavaScript demos | One folder per demo project. |
+| `projects/nodeNote/` | NodeNote demo submodule | Tracks `https://github.com/pigmore/nodeNote`. |
 | `package.json` | Convenience scripts | Runs the Python static server through npm scripts. |
 | `scripts/serve.py` | Local static web server | Uses Python standard library, no dependencies. |
 | `src/features/` | Main feature library | One folder per feature. |

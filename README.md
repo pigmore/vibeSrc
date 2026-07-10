@@ -27,6 +27,7 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 
 - [`projects/hello-world/`](./projects/hello-world/) — writes a friendly greeting with plain JS.
 - [`projects/count-plus-one/`](./projects/count-plus-one/) — increments a counter by one on each click.
+- [`projects/nodeNote/`](./projects/nodeNote/) — visual idea canvas maintained as a Git submodule from [`pigmore/nodeNote`](https://github.com/pigmore/nodeNote).
 
 ## Run the local web server
 
