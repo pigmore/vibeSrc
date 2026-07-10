@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OBJ ECS Editor — vibeSrc</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0a0d14;
+        --surface: #111722;
+        --surface-2: #171f2d;
+        --surface-3: #1c2637;
+        --border: #29364a;
+        --text: #edf2ff;
+        --muted: #9ba9c0;
+        --accent: #7cf2c7;
+        --accent-strong: #25c993;
+        --blue: #75baff;
+        --danger: #ff7d8b;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      body { min-width: 320px; min-height: 100vh; margin: 0; color: var(--text); background: var(--bg); }
+      button, input { font: inherit; }
+      button { cursor: pointer; }
+
+      .app { display: grid; grid-template-rows: auto 1fr; min-height: 100vh; }
+      .topbar { display: flex; align-items: center; gap: 16px; min-height: 64px; padding: 10px 18px; border-bottom: 1px solid var(--border); background: rgba(17, 23, 34, .94); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: max-content; font-weight: 900; letter-spacing: -.03em; }
+      .brand-mark { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 9px; color: #052017; background: linear-gradient(135deg, var(--accent), var(--blue)); }
+      .brand small { display: block; color: var(--muted); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .toolbar { display: flex; flex: 1; flex-wrap: wrap; gap: 8px; }
+      .toolbar-spacer { flex: 1; }
+      .button { min-height: 36px; padding: 0 12px; border: 1px solid var(--border); border-radius: 9px; color: var(--text); background: var(--surface-2); font-size: .88rem; font-weight: 800; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+      .button:hover, .button:focus-visible { border-color: var(--accent); background: var(--surface-3); outline: none; transform: translateY(-1px); }
+      .button.primary { border-color: transparent; color: #062117; background: var(--accent); }
+      .button.primary:hover, .button.primary:focus-visible { background: #a8f7dc; }
+      .button.danger { color: #ffd9dd; }
+      .button.danger:hover, .button.danger:focus-visible { border-color: var(--danger); }
+      .button[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+
+      .workspace { display: grid; grid-template-columns: 260px minmax(0, 1fr) 292px; min-height: 0; }
+      .sidebar { min-height: 0; overflow: auto; border-right: 1px solid var(--border); background: var(--surface); }
+      .inspector { border-right: 0; border-left: 1px solid var(--border); }
+      .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 14px 12px; border-bottom: 1px solid var(--border); }
+      .panel-header h2 { margin: 0; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+      .entity-list { padding: 8px; }
+      .entity { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 9px; width: 100%; padding: 10px; border: 1px solid transparent; border-radius: 9px; color: var(--text); background: transparent; text-align: left; }
+      .entity:hover { background: var(--surface-2); }
+      .entity[aria-selected="true"] { border-color: rgba(124, 242, 199, .6); background: rgba(124, 242, 199, .12); }
+      .entity-icon { color: var(--accent); font-size: 1rem; }
+      .entity-name { overflow: hidden; text-overflow: ellipsis; font-size: .9rem; font-weight: 800; white-space: nowrap; }
+      .entity-meta { margin-top: 3px; color: var(--muted); font-size: .72rem; }
+      .empty { padding: 20px 14px; color: var(--muted); font-size: .88rem; line-height: 1.6; }
+
+      .viewport-shell { position: relative; min-width: 0; min-height: 440px; overflow: hidden; background: radial-gradient(circle at 50% 35%, #1d2d43 0%, #0d121d 48%, #070a10 100%); }
+      #viewport { display: block; width: 100%; height: 100%; outline: none; touch-action: none; }
+      .viewport-hud { position: absolute; top: 14px; left: 14px; display: grid; gap: 7px; pointer-events: none; }
+      .chip { width: fit-content; padding: 6px 9px; border: 1px solid rgba(170, 193, 230, .18); border-radius: 999px; color: #dce8ff; background: rgba(7, 10, 16, .66); backdrop-filter: blur(10px); font-size: .72rem; font-weight: 800; }
+      .status { position: absolute; right: 14px; bottom: 14px; max-width: min(440px, calc(100% - 28px)); padding: 9px 12px; border: 1px solid rgba(170, 193, 230, .18); border-radius: 10px; color: #cfdbef; background: rgba(7, 10, 16, .76); font-size: .78rem; line-height: 1.4; }
+      .help { position: absolute; bottom: 14px; left: 14px; color: #b7c5dc; font-size: .73rem; line-height: 1.6; pointer-events: none; }
+
+      .inspector-body { padding: 14px; }
+      .selected-name { min-height: 48px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; color: var(--muted); background: var(--surface-2); font-size: .86rem; line-height: 1.35; }
+      .selected-name strong { display: block; margin-bottom: 3px; color: var(--text); }
+      .field-group { margin-top: 18px; }
+      .field-group h3 { margin: 0 0 9px; color: var(--muted); font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; }
+      .vector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+      .field label { display: grid; gap: 4px; color: var(--muted); font-size: .68rem; font-weight: 800; }
+      .field input { width: 100%; min-width: 0; padding: 8px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: #0c111a; }
+      .field input:focus { border-color: var(--accent); outline: none; }
+      .color-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+      .field input[type="color"] { min-height: 38px; padding: 4px; }
+      .architecture { margin-top: 20px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; color: var(--muted); background: rgba(23, 31, 45, .65); font-size: .75rem; line-height: 1.55; }
+      .architecture strong { color: var(--accent); }
+
+      .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+      @media (max-width: 960px) {
+        .workspace { grid-template-columns: 220px minmax(0, 1fr); }
+        .inspector { display: none; }
+      }
+      @media (max-width: 700px) {
+        .topbar { align-items: flex-start; flex-wrap: wrap; }
+        .toolbar-spacer { display: none; }
+        .workspace { grid-template-columns: 1fr; }
+        .sidebar { display: none; }
+        .viewport-shell { min-height: calc(100vh - 128px); }
+        .brand { width: 100%; }
+        .toolbar { width: 100%; }
+        .button { padding: 0 10px; }
+        .help { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark">◇</span><span>OBJ ECS Editor<small>vanilla JS · WebGL</small></span></div>
+        <nav class="toolbar" aria-label="Editor actions">
+          <button class="button primary" id="add-cube" type="button">+ Add cube</button>
+          <button class="button" id="import-obj" type="button">Import OBJ</button>
+          <button class="button" id="export-obj" type="button">Export scene</button>
+          <button class="button" id="toggle-wireframe" type="button" aria-pressed="false">Wireframe</button>
+          <span class="toolbar-spacer"></span>
+          <button class="button" id="frame-selected" type="button">Frame selected</button>
+          <button class="button danger" id="delete-selected" type="button" disabled>Delete</button>
+          <a class="button" href="../" style="text-decoration:none;display:inline-flex;align-items:center">← Projects</a>
+        </nav>
+        <input class="visually-hidden" id="obj-file" type="file" accept=".obj,text/plain" />
+      </header>
+
+      <section class="workspace" aria-label="3D OBJ editor">
+        <aside class="sidebar" aria-label="Scene entities">
+          <div class="panel-header"><h2>Entities</h2><span id="entity-count" class="chip">0</span></div>
+          <div class="entity-list" id="entity-list"></div>
+        </aside>
+
+        <section class="viewport-shell" aria-label="3D viewport">
+          <canvas id="viewport" tabindex="0" aria-label="3D editing viewport. Drag to orbit, scroll to zoom, and click an object to select it."></canvas>
+          <div class="viewport-hud"><span class="chip">ECS scene</span><span class="chip" id="fps">WebGL renderer</span></div>
+          <p class="help">Drag to orbit · Scroll to zoom · Click mesh to select · Delete removes selection</p>
+          <output class="status" id="status" aria-live="polite">Scene ready. Select a mesh or import an OBJ file.</output>
+        </section>
+
+        <aside class="sidebar inspector" aria-label="Selected entity inspector">
+          <div class="panel-header"><h2>Inspector</h2><span class="chip">components</span></div>
+          <div class="inspector-body">
+            <div id="selected-name" class="selected-name">No entity selected.</div>
+            <div class="field-group">
+              <h3>Transform · position</h3>
+              <div class="vector" data-component="position">
+                <div class="field"><label>X<input data-axis="x" type="number" step="0.1" value="0" disabled /></label></div>
+                <div class="field"><label>Y<input data-axis="y" type="number" step="0.1" value="0" disabled /></label></div>
+                <div class="field"><label>Z<input data-axis="z" type="number" step="0.1" value="0" disabled /></label></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <h3>Transform · rotation °</h3>
+              <div class="vector" data-component="rotation">
+                <div class="field"><label>X<input data-axis="x" type="number" step="5" value="0" disabled /></label></div>
+                <div class="field"><label>Y<input data-axis="y" type="number" step="5" value="0" disabled /></label></div>
+                <div class="field"><label>Z<input data-axis="z" type="number" step="5" value="0" disabled /></label></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <h3>Transform · scale</h3>
+              <div class="vector" data-component="scale">
+                <div class="field"><label>X<input data-axis="x" type="number" min="0.05" step="0.1" value="1" disabled /></label></div>
+                <div class="field"><label>Y<input data-axis="y" type="number" min="0.05" step="0.1" value="1" disabled /></label></div>
+                <div class="field"><label>Z<input data-axis="z" type="number" min="0.05" step="0.1" value="1" disabled /></label></div>
+              </div>
+            </div>
+            <div class="field-group">
+              <h3>Material</h3>
+              <div class="color-row"><div class="field"><label>Color<input id="material-color" type="text" value="#7cf2c7" disabled /></label></div><input id="color-picker" aria-label="Material color" type="color" value="#7cf2c7" disabled /></div>
+            </div>
+            <div class="architecture"><strong>Entity-Component-System</strong><br />Entity IDs hold no behavior. Components store <code>transform</code>, <code>mesh</code>, <code>material</code>, and <code>name</code>. Systems query component sets for rendering, selection, and editing.</div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        "use strict";
+
+        // ---- ECS core ------------------------------------------------------
+        class World {
+          constructor() { this.nextId = 1; this.entities = new Set(); this.components = new Map(); }
+          createEntity() { const id = this.nextId++; this.entities.add(id); return id; }
+          destroyEntity(id) { this.entities.delete(id); for (const store of this.components.values()) store.delete(id); }
+          add(id, type, value) { if (!this.components.has(type)) this.components.set(type, new Map()); this.components.get(type).set(id, value); return value; }
+          get(id, type) { return this.components.get(type)?.get(id); }
+          has(id, type) { return this.components.get(type)?.has(id) ?? false; }
+          query(...types) { return [...this.entities].filter((id) => types.every((type) => this.has(id, type))); }
+        }
+
+        const world = new World();
+        const state = { selected: null, wireframe: false, camera: { yaw: .72, pitch: .42, distance: 10, target: [0, 0, 0] }, pointer: { active: false, moved: false, x: 0, y: 0 } };
+        const $ = (selector) => document.querySelector(selector);
+        const canvas = $("#viewport");
+        const status = $("#status");
+        const list = $("#entity-list");
+        const inputs = [...document.querySelectorAll("[data-component] input")];
+
+        function setStatus(message) { status.textContent = message; }
+        function makeTransform(position = [0, 0, 0]) { return { position: [...position], rotation: [0, 0, 0], scale: [1, 1, 1], matrix: identity() }; }
+        function hexToRgb(hex) { const n = Number.parseInt(hex.slice(1), 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]; }
+        function rgbToHex(rgb) { return "#" + rgb.map((value) => Math.round(Math.max(0, Math.min(1, value)) * 255).toString(16).padStart(2, "0")).join(""); }
+
+        // ---- math used by systems -----------------------------------------
+        function identity() { return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]; }
+        function multiply(a, b) {
+          const out = new Array(16).fill(0);
+          for (let row = 0; row < 4; row++) for (let col = 0; col < 4; col++) for (let k = 0; k < 4; k++) out[col * 4 + row] += a[k * 4 + row] * b[col * 4 + k];
+          return out;
+        }
+        function perspective(fov, aspect, near, far) { const f = 1 / Math.tan(fov / 2); const nf = 1 / (near - far); return [f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0]; }
+        function normalize(v) { const length = Math.hypot(...v) || 1; return v.map((n) => n / length); }
+        function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+        function subtract(a, b) { return a.map((n, index) => n - b[index]); }
+        function lookAt(eye, target, up = [0, 1, 0]) {
+          const z = normalize(subtract(eye, target)); const x = normalize(cross(up, z)); const y = cross(z, x);
+          return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -x.reduce((sum, n, i) => sum + n * eye[i], 0), -y.reduce((sum, n, i) => sum + n * eye[i], 0), -z.reduce((sum, n, i) => sum + n * eye[i], 0), 1];
+        }
+        function transformMatrix(transform) {
+          const [x, y, z] = transform.rotation.map((degree) => degree * Math.PI / 180); const [sx, sy, sz] = transform.scale; const [tx, ty, tz] = transform.position;
+          const cx = Math.cos(x), sxr = Math.sin(x), cy = Math.cos(y), syr = Math.sin(y), cz = Math.cos(z), szr = Math.sin(z);
+          const rx = [1, 0, 0, 0, 0, cx, sxr, 0, 0, -sxr, cx, 0, 0, 0, 0, 1];
+          const ry = [cy, 0, -syr, 0, 0, 1, 0, 0, syr, 0, cy, 0, 0, 0, 0, 1];
+          const rz = [cz, szr, 0, 0, -szr, cz, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+          const scale = [sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, 0, 1]; const translate = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, tx, ty, tz, 1];
+          return multiply(translate, multiply(rz, multiply(ry, multiply(rx, scale))));
+        }
+        function transformPoint(matrix, point) { const [x, y, z] = point; const w = matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15]; return [(matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12]) / w, (matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13]) / w, (matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14]) / w]; }
+
+        function cubeMesh() {
+          const p = [-1,-1,-1, 1,-1,-1, 1,1,-1, -1,1,-1, -1,-1,1, 1,-1,1, 1,1,1, -1,1,1];
+          const i = [0,1,2,0,2,3, 1,5,6,1,6,2, 5,4,7,5,7,6, 4,0,3,4,3,7, 3,2,6,3,6,7, 4,5,1,4,1,0];
+          return makeMesh(p, i);
+        }
+        function makeMesh(positions, indices) {
+          const normals = new Array(positions.length).fill(0);
+          for (let i = 0; i < indices.length; i += 3) {
+            const a = indices[i] * 3, b = indices[i + 1] * 3, c = indices[i + 2] * 3;
+            const ab = [positions[b] - positions[a], positions[b + 1] - positions[a + 1], positions[b + 2] - positions[a + 2]];
+            const ac = [positions[c] - positions[a], positions[c + 1] - positions[a + 1], positions[c + 2] - positions[a + 2]];
+            const n = cross(ab, ac); for (const index of [a, b, c]) { normals[index] += n[0]; normals[index + 1] += n[1]; normals[index + 2] += n[2]; }
+          }
+          for (let i = 0; i < normals.length; i += 3) { const n = normalize(normals.slice(i, i + 3)); normals[i] = n[0]; normals[i + 1] = n[1]; normals[i + 2] = n[2]; }
+          return { positions, normals, indices, gpu: null };
+        }
+        function parseObj(text) {
+          const positions = []; const indices = [];
+          for (const rawLine of text.split(/\r?\n/)) {
+            const line = rawLine.trim(); if (!line || line.startsWith("#")) continue;
+            const fields = line.split(/\s+/); if (fields[0] === "v" && fields.length >= 4) positions.push(Number(fields[1]), Number(fields[2]), Number(fields[3]));
+            if (fields[0] === "f" && fields.length >= 4) {
+              const face = fields.slice(1).map((value) => { const index = Number(value.split("/")[0]); return index < 0 ? positions.length / 3 + index : index - 1; });
+              for (let i = 1; i < face.length - 1; i++) indices.push(face[0], face[i], face[i + 1]);
+            }
+          }
+          if (positions.length < 9 || indices.length < 3 || positions.some((n) => !Number.isFinite(n)) || indices.some((n) => n < 0 || n * 3 >= positions.length)) throw new Error("No supported triangular OBJ geometry found. Use v and f records.");
+          if (positions.length / 3 > 65535) throw new Error("This lightweight demo supports OBJ files with up to 65,535 vertices.");
+          return makeMesh(positions, indices);
+        }
+
+        // ---- WebGL render system ------------------------------------------
+        const gl = canvas.getContext("webgl", { antialias: true });
+        if (!gl) { setStatus("WebGL is unavailable in this browser. Try a current desktop browser."); return; }
+        const vertexSource = `attribute vec3 aPosition; attribute vec3 aNormal; uniform mat4 uModel; uniform mat4 uView; uniform mat4 uProjection; varying vec3 vNormal; varying vec3 vWorld; void main(){ vec4 world=uModel*vec4(aPosition,1.0); vWorld=world.xyz; vNormal=mat3(uModel)*aNormal; gl_Position=uProjection*uView*world; }`;
+        const fragmentSource = `precision mediump float; uniform vec3 uColor; uniform vec3 uLight; uniform bool uSelected; varying vec3 vNormal; varying vec3 vWorld; void main(){ vec3 n=normalize(vNormal); float light=max(dot(n,normalize(uLight)),0.0); float rim=pow(1.0-max(dot(n,normalize(-vWorld)),0.0),2.0); vec3 base=uColor*(0.24+0.76*light)+vec3(0.05)*rim; if(uSelected) base=mix(base,vec3(0.49,0.95,0.78),0.28); gl_FragColor=vec4(base,1.0); }`;
+        function shader(type, source) { const result = gl.createShader(type); gl.shaderSource(result, source); gl.compileShader(result); if (!gl.getShaderParameter(result, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(result)); return result; }
+        function program(vertex, fragment) { const result = gl.createProgram(); gl.attachShader(result, shader(gl.VERTEX_SHADER, vertex)); gl.attachShader(result, shader(gl.FRAGMENT_SHADER, fragment)); gl.linkProgram(result); if (!gl.getProgramParameter(result, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(result)); return result; }
+        const renderProgram = program(vertexSource, fragmentSource);
+        const locations = { position: gl.getAttribLocation(renderProgram, "aPosition"), normal: gl.getAttribLocation(renderProgram, "aNormal"), model: gl.getUniformLocation(renderProgram, "uModel"), view: gl.getUniformLocation(renderProgram, "uView"), projection: gl.getUniformLocation(renderProgram, "uProjection"), color: gl.getUniformLocation(renderProgram, "uColor"), light: gl.getUniformLocation(renderProgram, "uLight"), selected: gl.getUniformLocation(renderProgram, "uSelected") };
+        function ensureGpu(mesh) {
+          if (mesh.gpu) return mesh.gpu;
+          const gpu = { position: gl.createBuffer(), normal: gl.createBuffer(), index: gl.createBuffer(), count: mesh.indices.length };
+          gl.bindBuffer(gl.ARRAY_BUFFER, gpu.position); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh.positions), gl.STATIC_DRAW);
+          gl.bindBuffer(gl.ARRAY_BUFFER, gpu.normal); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh.normals), gl.STATIC_DRAW);
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gpu.index); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(mesh.indices), gl.STATIC_DRAW); mesh.gpu = gpu; return gpu;
+        }
+        const grid = (() => { const positions = []; for (let n = -10; n <= 10; n++) { positions.push(n, 0, -10, n, 0, 10, -10, 0, n, 10, 0, n); } const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW); return { buffer, count: positions.length / 3 }; })();
+        const RenderSystem = {
+          render() {
+            const width = Math.max(1, canvas.clientWidth * devicePixelRatio), height = Math.max(1, canvas.clientHeight * devicePixelRatio);
+            if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+            gl.viewport(0, 0, width, height); gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.clearColor(.027, .04, .065, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            const { yaw, pitch, distance, target } = state.camera; const eye = [target[0] + distance * Math.sin(yaw) * Math.cos(pitch), target[1] + distance * Math.sin(pitch), target[2] + distance * Math.cos(yaw) * Math.cos(pitch)];
+            const view = lookAt(eye, target); const projection = perspective(Math.PI / 4, width / height, .1, 200);
+            gl.useProgram(renderProgram); gl.uniformMatrix4fv(locations.view, false, view); gl.uniformMatrix4fv(locations.projection, false, projection); gl.uniform3f(locations.light, -3, 7, 5);
+            gl.disable(gl.CULL_FACE); gl.bindBuffer(gl.ARRAY_BUFFER, grid.buffer); gl.enableVertexAttribArray(locations.position); gl.vertexAttribPointer(locations.position, 3, gl.FLOAT, false, 0, 0); gl.disableVertexAttribArray(locations.normal); gl.vertexAttrib3f(locations.normal, 0, 1, 0); gl.uniformMatrix4fv(locations.model, false, identity()); gl.uniform3f(locations.color, .18, .27, .38); gl.uniform1i(locations.selected, false); gl.drawArrays(gl.LINES, 0, grid.count); gl.enable(gl.CULL_FACE);
+            for (const id of world.query("transform", "mesh", "material")) {
+              const transform = world.get(id, "transform"); transform.matrix = transformMatrix(transform); const mesh = world.get(id, "mesh"); const material = world.get(id, "material"); const gpu = ensureGpu(mesh);
+              gl.bindBuffer(gl.ARRAY_BUFFER, gpu.position); gl.enableVertexAttribArray(locations.position); gl.vertexAttribPointer(locations.position, 3, gl.FLOAT, false, 0, 0);
+              gl.bindBuffer(gl.ARRAY_BUFFER, gpu.normal); gl.enableVertexAttribArray(locations.normal); gl.vertexAttribPointer(locations.normal, 3, gl.FLOAT, false, 0, 0);
+              gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gpu.index); gl.uniformMatrix4fv(locations.model, false, transform.matrix); gl.uniform3fv(locations.color, material.color); gl.uniform1i(locations.selected, id === state.selected); gl.drawElements(state.wireframe ? gl.LINES : gl.TRIANGLES, gpu.count, gl.UNSIGNED_SHORT, 0);
+            }
+            state.lastViewProjection = multiply(projection, view);
+            requestAnimationFrame(() => RenderSystem.render());
+          }
+        };
+
+        // ---- editor / selection systems -----------------------------------
+        const EditorSystem = {
+          createMeshEntity(name, mesh, position = [0, 0, 0], color = "#7cf2c7") { const id = world.createEntity(); world.add(id, "name", { value: name }); world.add(id, "transform", makeTransform(position)); world.add(id, "mesh", mesh); world.add(id, "material", { color: hexToRgb(color) }); world.add(id, "selectable", {}); return id; },
+          select(id) { state.selected = id; refreshUi(); const entityName = id ? world.get(id, "name").value : "none"; setStatus(id ? `Selected ${entityName}. Edit its ECS components in the inspector.` : "Selection cleared."); },
+          deleteSelected() { if (!state.selected) return; const name = world.get(state.selected, "name")?.value || "entity"; world.destroyEntity(state.selected); state.selected = null; refreshUi(); setStatus(`Deleted ${name}.`); },
+          pick(clientX, clientY) { const rect = canvas.getBoundingClientRect(); const x = clientX - rect.left, y = clientY - rect.top; let closest = null, distance = Infinity; for (const id of world.query("transform", "selectable")) { const transform = world.get(id, "transform"); const clip = transformPoint(multiply(state.lastViewProjection, transform.matrix), [0, 0, 0]); const sx = (clip[0] * .5 + .5) * rect.width, sy = (-clip[1] * .5 + .5) * rect.height; const d = Math.hypot(sx - x, sy - y); if (clip[2] > -1 && clip[2] < 1 && d < distance) { closest = id; distance = d; } } if (distance < 58) EditorSystem.select(closest); else EditorSystem.select(null); },
+          frameSelected() { if (!state.selected) { setStatus("Select an entity before framing it."); return; } const position = world.get(state.selected, "transform").position; state.camera.target = [...position]; state.camera.distance = 6; setStatus(`Camera framed ${world.get(state.selected, "name").value}.`); },
+        };
+        function refreshUi() {
+          const ids = world.query("name", "transform", "mesh"); $("#entity-count").textContent = String(ids.length); list.innerHTML = "";
+          if (!ids.length) list.innerHTML = '<p class="empty">The scene is empty. Add a cube or import an OBJ file.</p>';
+          for (const id of ids) { const name = world.get(id, "name").value; const mesh = world.get(id, "mesh"); const button = document.createElement("button"); button.type = "button"; button.className = "entity"; button.setAttribute("aria-selected", String(id === state.selected)); button.innerHTML = `<span class="entity-icon">◇</span><span><span class="entity-name">${escapeHtml(name)}</span><span class="entity-meta">${mesh.indices.length / 3} faces · entity ${id}</span></span>`; button.addEventListener("click", () => EditorSystem.select(id)); list.append(button); }
+          const selected = state.selected; const selectedName = $("#selected-name"); const deleteButton = $("#delete-selected"); deleteButton.disabled = !selected;
+          for (const input of inputs) input.disabled = !selected;
+          $("#material-color").disabled = !selected; $("#color-picker").disabled = !selected;
+          if (!selected) { selectedName.textContent = "No entity selected."; return; }
+          const name = world.get(selected, "name").value; const transform = world.get(selected, "transform"); const material = world.get(selected, "material"); selectedName.innerHTML = `<strong>${escapeHtml(name)}</strong>Entity ${selected} · transform + mesh + material`;
+          for (const component of ["position", "rotation", "scale"]) for (const input of document.querySelectorAll(`[data-component="${component}"] input`)) input.value = transform[component][["x", "y", "z"].indexOf(input.dataset.axis)];
+          const color = rgbToHex(material.color); $("#material-color").value = color; $("#color-picker").value = color;
+        }
+        function escapeHtml(value) { const element = document.createElement("span"); element.textContent = value; return element.innerHTML; }
+        function updateTransformFromInput(event) { if (!state.selected) return; const input = event.currentTarget; const component = input.closest("[data-component]").dataset.component; const axis = ["x", "y", "z"].indexOf(input.dataset.axis); const value = Number(input.value); if (Number.isFinite(value)) world.get(state.selected, "transform")[component][axis] = component === "scale" ? Math.max(.05, value) : value; }
+
+        // ---- input system --------------------------------------------------
+        canvas.addEventListener("pointerdown", (event) => { canvas.setPointerCapture(event.pointerId); state.pointer = { active: true, moved: false, x: event.clientX, y: event.clientY }; canvas.focus(); });
+        canvas.addEventListener("pointermove", (event) => { if (!state.pointer.active) return; const dx = event.clientX - state.pointer.x, dy = event.clientY - state.pointer.y; if (Math.abs(dx) + Math.abs(dy) > 2) state.pointer.moved = true; state.camera.yaw -= dx * .008; state.camera.pitch = Math.max(-1.45, Math.min(1.45, state.camera.pitch - dy * .008)); state.pointer.x = event.clientX; state.pointer.y = event.clientY; });
+        canvas.addEventListener("pointerup", (event) => { if (!state.pointer.moved) EditorSystem.pick(event.clientX, event.clientY); state.pointer.active = false; });
+        canvas.addEventListener("wheel", (event) => { event.preventDefault(); state.camera.distance = Math.max(2, Math.min(45, state.camera.distance * (event.deltaY > 0 ? 1.1 : .9))); }, { passive: false });
+        window.addEventListener("keydown", (event) => { if ((event.key === "Delete" || event.key === "Backspace") && document.activeElement?.tagName !== "INPUT") EditorSystem.deleteSelected(); });
+
+        // ---- UI bridges into ECS systems ----------------------------------
+        $("#add-cube").addEventListener("click", () => { const count = world.query("mesh").length; const id = EditorSystem.createMeshEntity(`Cube ${count + 1}`, cubeMesh(), [Number((count * .55).toFixed(2)), 1, 0], count % 2 ? "#75baff" : "#7cf2c7"); EditorSystem.select(id); });
+        $("#delete-selected").addEventListener("click", () => EditorSystem.deleteSelected());
+        $("#frame-selected").addEventListener("click", () => EditorSystem.frameSelected());
+        $("#toggle-wireframe").addEventListener("click", (event) => { state.wireframe = !state.wireframe; event.currentTarget.setAttribute("aria-pressed", String(state.wireframe)); event.currentTarget.textContent = state.wireframe ? "Solid" : "Wireframe"; setStatus(state.wireframe ? "Wireframe mode enabled." : "Solid render mode enabled."); });
+        $("#import-obj").addEventListener("click", () => $("#obj-file").click());
+        $("#obj-file").addEventListener("change", async (event) => { const file = event.target.files?.[0]; if (!file) return; try { const mesh = parseObj(await file.text()); const id = EditorSystem.createMeshEntity(file.name.replace(/\.obj$/i, "") || "Imported OBJ", mesh, [0, 0, 0], "#f6b56d"); EditorSystem.select(id); setStatus(`Imported ${file.name}: ${mesh.positions.length / 3} vertices, ${mesh.indices.length / 3} faces.`); } catch (error) { setStatus(`Could not import ${file.name}: ${error.message}`); } finally { event.target.value = ""; } });
+        $("#export-obj").addEventListener("click", () => { const lines = ["# OBJ ECS Editor export"]; for (const id of world.query("transform", "mesh", "name")) { const transform = world.get(id, "transform"); const mesh = world.get(id, "mesh"); lines.push(`o ${world.get(id, "name").value.replace(/\s+/g, "_")}`); const offset = lines.filter((line) => line.startsWith("v ")).length; for (let index = 0; index < mesh.positions.length; index += 3) { const p = transformPoint(transformMatrix(transform), mesh.positions.slice(index, index + 3)); lines.push(`v ${p.map((n) => n.toFixed(6)).join(" ")}`); } for (let index = 0; index < mesh.indices.length; index += 3) lines.push(`f ${mesh.indices[index] + 1 + offset} ${mesh.indices[index + 1] + 1 + offset} ${mesh.indices[index + 2] + 1 + offset}`); } const blob = new Blob([lines.join("\n") + "\n"], { type: "text/plain" }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "ecs-editor-scene.obj"; link.click(); URL.revokeObjectURL(link.href); setStatus("Exported scene as ecs-editor-scene.obj."); });
+        for (const input of inputs) input.addEventListener("input", updateTransformFromInput);
+        for (const input of [$("#material-color"), $("#color-picker")]) input.addEventListener("input", (event) => { if (!state.selected || !/^#[\da-f]{6}$/i.test(event.target.value)) return; world.get(state.selected, "material").color = hexToRgb(event.target.value); $("#material-color").value = event.target.value; $("#color-picker").value = event.target.value; });
+
+        // Seed the demo scene with entities, then let systems own state updates.
+        const cube = EditorSystem.createMeshEntity("Starter cube", cubeMesh(), [0, 1, 0], "#7cf2c7");
+        const cubeTwo = EditorSystem.createMeshEntity("Blue cube", cubeMesh(), [3, .75, -1.6], "#75baff"); world.get(cubeTwo, "transform").scale = [.75, .75, .75]; world.get(cubeTwo, "transform").rotation = [0, 28, 0];
+        EditorSystem.select(cube); RenderSystem.render();
+      })();
+    </script>
+  </body>
+</html>

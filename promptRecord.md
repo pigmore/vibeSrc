@@ -22,6 +22,36 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — add OBJ ECS editor demo
+
+- **Goal:** Build a NodeNote-style standalone project for editing OBJ meshes in 3D.
+- **Prompt:** "use the proj nodeNote as a reference make a similar proj to process 3d obj editor, vanillajs, entity-component-system architechtrue"
+- **Context files:** `projects/nodeNote/index.html`, `projects/nodeNote/README.md`, `rules.md`, `tech-principle.md`.
+- **Decision:** Create a dependency-free single-page WebGL demo whose ECS world keeps entity IDs and component stores separate from rendering/input/editor systems.
+- **Changed files:** `projects/ecs-obj-editor/index.html`, `projects/ecs-obj-editor/README.md`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Serve the route, inspect browser console, add/select/edit a cube, and import a sample OBJ file.
+- **Follow-ups:** Add proper ray-cast picking, OBJ normal/material support, textures, undo/redo, and glTF support if this grows beyond a teaching demo.
+
+## 2026-07-10 — add issue log
+
+- **Goal:** Add a dedicated project issue log.
+- **Prompt:** "add an issue.md to record the issues,"
+- **Context files:** `README.md`, `filePath.md`, `promptRecord.md`.
+- **Decision:** Create `issue.md` with status/type conventions, an entry template, and the first resolved homepage CTA issue.
+- **Changed files:** `issue.md`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Confirm `issue.md` exists and README/path map reference it.
+- **Follow-ups:** Move future bug reports and UX fixes into `issue.md`; keep `promptRecord.md` for decisions and important prompts.
+
+## 2026-07-10 — fix homepage README CTA
+
+- **Goal:** Fix the homepage secondary action that pointed visitors directly to the raw local `README.md` file.
+- **Prompt:** "read the readme in the home page is not right"
+- **Context files:** `index.html`, server response headers for `/README.md`.
+- **Decision:** Replace the local `README.md` CTA with a GitHub repository link so visitors do not hit an unstyled/raw Markdown file from the static server.
+- **Changed files:** `index.html`, `promptRecord.md`.
+- **Verification:** Request the homepage and confirm the CTA text/link changed.
+- **Follow-ups:** If project docs need to be readable inside the site later, add a dedicated HTML docs/about page instead of linking directly to raw Markdown.
+
 ## 2026-07-10 — add NodeNote as project submodule
 
 - **Goal:** Treat the existing NodeNote vanilla JavaScript repo as a vibeSrc project.

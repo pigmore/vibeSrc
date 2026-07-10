@@ -18,6 +18,7 @@ A vibe-coding open-source frontend project that shares all kinds of useful front
 - [`tech-principle.md`](./tech-principle.md) — technical principles for frontend decisions.
 - [`coding.md`](./coding.md) — coding-agent/developer guide, similar to a lightweight `CLAUDE.md`.
 - [`filePath.md`](./filePath.md) — current and planned repository path map.
+- [`issue.md`](./issue.md) — issue log for bugs, UI feedback, and follow-up fixes.
 - [`promptRecord.md`](./promptRecord.md) — prompt and decision log template.
 - [`roadmap.md`](./roadmap.md) — startup roadmap and first feature ideas.
 
@@ -28,6 +29,7 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 - [`projects/hello-world/`](./projects/hello-world/) — writes a friendly greeting with plain JS.
 - [`projects/count-plus-one/`](./projects/count-plus-one/) — increments a counter by one on each click.
 - [`projects/nodeNote/`](./projects/nodeNote/) — visual idea canvas maintained as a Git submodule from [`pigmore/nodeNote`](https://github.com/pigmore/nodeNote).
+- [`projects/ecs-obj-editor/`](./projects/ecs-obj-editor/) — a vanilla JavaScript WebGL OBJ editor that demonstrates an Entity-Component-System architecture.
 
 ## Run the local web server
 

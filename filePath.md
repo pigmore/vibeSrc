@@ -6,6 +6,7 @@ This file records the intended structure of `vibeSrc`. Keep it updated when fold
 
 ```text
 vibeSrc/
+  .gitignore
   LICENSE
   README.md
   index.html
@@ -14,6 +15,7 @@ vibeSrc/
   tech-principle.md
   coding.md
   filePath.md
+  issue.md
   promptRecord.md
   roadmap.md
   projects/
@@ -23,6 +25,9 @@ vibeSrc/
     count-plus-one/
       index.html
     nodeNote/                 # Git submodule: https://github.com/pigmore/nodeNote
+    ecs-obj-editor/
+      index.html
+      README.md
   scripts/
     serve.py
 ```
@@ -65,15 +70,18 @@ vibeSrc/
 | Path | Purpose | Notes |
 | --- | --- | --- |
 | `README.md` | Project overview | Keep short, link to deeper docs. |
+| `.gitignore` | Local/generated file exclusions | Keeps Python caches and macOS metadata out of commits. |
 | `rules.md` | Collaboration and quality rules | Update when contribution policy changes. |
 | `tech-principle.md` | Technical decision principles | Update when stack or quality bar changes. |
 | `coding.md` | Agent/developer coding guide | Similar role to `CLAUDE.md`. |
 | `filePath.md` | Repository map | Update on structure changes. |
+| `issue.md` | Issue log | Record bugs, UX issues, fixes, and follow-ups. |
 | `promptRecord.md` | Prompt and decision log | Append important AI prompts and outcomes. |
 | `roadmap.md` | Startup roadmap | Track phases and feature ideas. |
 | `index.html` | Static welcome page | Entry point for visitors and demo links. |
 | `projects/` | Static vanilla JavaScript demos | One folder per demo project. |
 | `projects/nodeNote/` | NodeNote demo submodule | Tracks `https://github.com/pigmore/nodeNote`. |
+| `projects/ecs-obj-editor/` | Vanilla JavaScript 3D editor | WebGL OBJ editor with an ECS architecture. |
 | `package.json` | Convenience scripts | Runs the Python static server through npm scripts. |
 | `scripts/serve.py` | Local static web server | Uses Python standard library, no dependencies. |
 | `src/features/` | Main feature library | One folder per feature. |
