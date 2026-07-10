@@ -1,14 +1,16 @@
-# OBJ ECS Editor
+# OBJ ECS Editor — SketchUp-lite
 
-A single-file **vanilla JavaScript + WebGL** 3D OBJ editor demo built around an explicit **Entity-Component-System (ECS)** architecture.
+A browser-native **vanilla JavaScript + WebGL** 3D modeling study. It keeps the explicit **Entity-Component-System (ECS)** architecture of the original OBJ editor, then adds a compact, SketchUp-inspired direct-modeling workflow.
 
 ## What it demonstrates
 
 - Browser-native WebGL rendering without a framework or 3D engine dependency.
-- Small ECS world implementation with entity IDs and component stores.
-- `transform`, `mesh`, `material`, `name`, and `selectable` components.
-- Render, editor, selection, and input systems that query component sets.
-- Orbit camera controls, entity selection, editable transform/material fields, OBJ import, and scene OBJ export.
+- ECS entity IDs with separate `name`, `transform`, `mesh`, `material`, and `selectable` component stores.
+- Dedicated render, editor, history, and input systems.
+- Grid-aware box placement, selection, move, rotate, and push/pull modeling tools.
+- Reversible scene history with undo/redo.
+- Orbit, top, home, and frame-selection camera controls.
+- OBJ import and full-scene OBJ export.
 
 ## Run
 
@@ -24,17 +26,21 @@ Then visit:
 http://127.0.0.1:8080/projects/ecs-obj-editor/
 ```
 
-## Controls
+## Modeling controls
 
 | Action | Control |
 | --- | --- |
-| Orbit camera | Drag inside the viewport |
-| Zoom | Mouse wheel / trackpad scroll |
-| Select mesh | Click a mesh or an entity in the list |
-| Add mesh | **Add cube** |
+| Select / orbit | `V`, click a mesh to select; drag empty space to orbit |
+| Place a unit box | `B`, then click the ground grid |
+| Move selected mesh | `M`, then drag in the viewport |
+| Rotate selected mesh | `R`, then drag left/right |
+| Push / pull height | `P`, then drag up/down |
+| Toggle wireframe | `G` or the **Display** tile |
+| Undo / redo | `Ctrl/Cmd + Z` / `Shift + Ctrl/Cmd + Z` |
+| Delete selected mesh | `Delete` or `Backspace` |
+| Camera helpers | **Home view**, **Top view**, **Frame selection** |
+| Grid snapping | Toggle snap and choose increment from the left panel |
 | Import geometry | **Import OBJ** (supports `v` and `f` records) |
-| Edit entity | Inspector transform and color fields |
-| Remove entity | **Delete** or keyboard Delete/Backspace |
 | Export scene | **Export scene** |
 
 ## ECS shape
@@ -52,10 +58,11 @@ Components
 
 Systems
   RenderSystem: transform + mesh + material → WebGL draw calls
-  EditorSystem: scene creation, selection, delete, framing
-  InputSystem: pointer orbit, wheel zoom, keyboard delete
+  EditorSystem: modeling actions, selection, camera helpers
+  HistorySystem: scene snapshots → undo / redo
+  InputSystem: pointer gestures, shortcuts, orbit, direct manipulation
 ```
 
-## Scope and limits
+## Intentional limits
 
-This is intentionally a study project, not a production DCC tool. OBJ import supports vertex (`v`) and face (`f`) records and triangulates polygon faces. It does not currently import materials, textures, normals, groups, or OBJ files with more than 65,535 vertices.
+This is a teaching/demo editor rather than a production DCC application. It currently uses lightweight origin-based selection and transform tools rather than mesh-face editing, boolean operations, edge inference, UVs, materials, textures, groups/components, or glTF support. OBJ import accepts vertex (`v`) and face (`f`) records, triangulates polygon faces, and supports at most 65,535 vertices.

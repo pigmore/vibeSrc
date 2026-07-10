@@ -27,6 +27,7 @@ vibeSrc/
     nodeNote/                 # Git submodule: https://github.com/pigmore/nodeNote
     ecs-obj-editor/
       index.html
+      editor.js
       README.md
   scripts/
     serve.py

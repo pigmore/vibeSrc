@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — expand OBJ editor into SketchUp-lite modeling demo
+
+- **Goal:** Add practical direct-modeling features to the WebGL OBJ ECS editor.
+- **Prompt:** "implement more feature like skectchup lite version"
+- **Context files:** `projects/ecs-obj-editor/index.html`, `projects/ecs-obj-editor/README.md`.
+- **Decision:** Split the interactive logic into `editor.js` and add a tool palette for select/orbit, grid box placement, move, rotate, push/pull, grid snap, camera views, duplicate, and undo/redo. Keep the rendering path dependency-free and ECS-oriented.
+- **Changed files:** `projects/ecs-obj-editor/index.html`, `projects/ecs-obj-editor/editor.js`, `projects/ecs-obj-editor/README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Browser-load the WebGL editor, add/duplicate/undo boxes, drag with the Move tool, place a grid box, import a sample OBJ, and inspect the browser console for errors.
+- **Follow-ups:** Add face-level selection, real drag gizmos, measurements, edge inference, groups/components, booleans, and glTF support if this becomes a more complete modeling tool.
+
 ## 2026-07-10 — correct OBJ viewer vertical orbit direction
 
 - **Goal:** Make vertical drag behavior match the viewer's horizontal drag behavior.
