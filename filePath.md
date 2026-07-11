@@ -7,6 +7,8 @@ This file records the intended structure of `vibeSrc`. Keep it updated when fold
 ```text
 vibeSrc/
   .gitignore
+  assets/
+    buymeacoffee-pigmore-qr.png
   LICENSE
   README.md
   index.html

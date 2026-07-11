@@ -51,6 +51,10 @@ For LAN testing from another device on the same network:
 npm run serve:lan
 ```
 
+## Support vibeSrc
+
+The homepage includes a scannable QR code and donation button for [Buy Me a Coffee — pigmore](https://buymeacoffee.com/pigmore).
+
 ## Current status
 
 Foundation docs and the first static vanilla JavaScript demos are initialized. The next step is to choose the long-term frontend stack or keep expanding the framework-free demo library.

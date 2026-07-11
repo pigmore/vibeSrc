@@ -160,6 +160,50 @@
         text-underline-offset: 4px;
       }
 
+      .donate {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 32px;
+        margin-top: 56px;
+        padding: 28px 32px;
+        border: 1px solid rgba(34, 211, 238, 0.34);
+        border-radius: 28px;
+        background:
+          linear-gradient(125deg, rgba(139, 92, 246, 0.2), rgba(34, 211, 238, 0.12)),
+          var(--panel);
+      }
+
+      .donate-copy { max-width: 640px; }
+
+      .donate-copy h2 {
+        margin: 0 0 10px;
+        font-size: clamp(1.55rem, 4vw, 2.25rem);
+        letter-spacing: -0.04em;
+      }
+
+      .donate-copy p {
+        margin: 0 0 20px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .donate-qr {
+        display: grid;
+        place-items: center;
+        width: 176px;
+        padding: 10px;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24);
+      }
+
+      .donate-qr img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
       footer {
         margin-top: 56px;
         color: var(--muted);
@@ -174,6 +218,16 @@
         .hero {
           padding: 28px;
           border-radius: 24px;
+        }
+
+        .donate {
+          grid-template-columns: 1fr;
+          gap: 22px;
+          padding: 26px;
+        }
+
+        .donate-qr {
+          width: min(176px, 100%);
         }
       }
     </style>
@@ -215,6 +269,39 @@
           <p>A browser-native 3D OBJ editor built with vanilla JavaScript, WebGL, and an ECS architecture.</p>
           <a href="./projects/ecs-obj-editor/">Open OBJ ECS Editor</a>
         </article>
+      </section>
+
+      <section class="donate" aria-labelledby="donate-title">
+        <div class="donate-copy">
+          <p class="eyebrow">Support vibeSrc</p>
+          <h2 id="donate-title">Enjoying the demos?</h2>
+          <p>
+            Scan the QR code or use the button to support pigmore on Buy Me a Coffee. Every
+            contribution helps keep new frontend experiments and implementation notes coming.
+          </p>
+          <a
+            class="button primary"
+            href="https://buymeacoffee.com/pigmore"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Donate on Buy Me a Coffee ↗
+          </a>
+        </div>
+        <a
+          class="donate-qr"
+          href="https://buymeacoffee.com/pigmore"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open pigmore's Buy Me a Coffee page"
+        >
+          <img
+            src="./assets/buymeacoffee-pigmore-qr.png"
+            alt="QR code for pigmore's Buy Me a Coffee donation page"
+            width="444"
+            height="444"
+          />
+        </a>
       </section>
 
       <footer>

@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — add homepage donation panel
+
+- **Goal:** Give visitors a clear way to support vibeSrc.
+- **Prompt:** "https://buymeacoffee.com/pigmore here is my donate link, gen a donate div show this link as qrcode and this link button in the home page."
+- **Context files:** `index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Decision:** Add an accessible homepage support panel with a locally generated QR image and two external, safe new-tab links to the supplied Buy Me a Coffee page.
+- **Changed files:** `index.html`, `assets/buymeacoffee-pigmore-qr.png`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Serve the homepage, confirm the donation heading/button/QR image load, and inspect the external link URL in a browser.
+- **Follow-ups:** Replace the donation destination only when the public support URL changes.
+
 ## 2026-07-10 — expand OBJ editor into SketchUp-lite modeling demo
 
 - **Goal:** Add practical direct-modeling features to the WebGL OBJ ECS editor.
