@@ -9,6 +9,7 @@ A browser-runnable architecture demo for an extensible 3D editor. It focuses on 
 - Tool plugins for selection, transform, material, and joint configuration.
 - Inspector edits that create commands instead of mutating scene state directly.
 - A TypeScript contract file (`contracts.ts`) paired with the dependency-free runnable implementation (`main.js`).
+- A separately compile-checked `main.ts` reference implementation that shows the same command/plugin design with TypeScript classes and interfaces.
 
 ## Try it
 

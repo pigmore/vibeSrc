@@ -10,6 +10,7 @@ A browser-native WebGL lab that renders a dense field of **Gaussian-style splats
 - Density LOD that reduces splats per visible tile.
 - Live FPS, frame-time, draw-count, and visible-tile measurements.
 - Pointer orbit and wheel zoom controls.
+- A separately compile-checked `main.ts` reference source with a per-splat frustum-filter implementation for code review; the static demo itself runs `main.js` without a build step.
 
 ## Controls
 

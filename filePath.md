@@ -34,11 +34,13 @@ vibeSrc/
     editor-command-studio/
       index.html
       main.js
+      main.ts                 # TypeScript reference implementation
       contracts.ts
       README.md
     gaussian-splat-render-lab/
       index.html
       main.js
+      main.ts                 # TypeScript reference implementation
       README.md
     simulation-sync-lab/
       index.html
