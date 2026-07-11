@@ -46,6 +46,13 @@ vibeSrc/
       index.html
       main.js
       README.md
+    ape-ecs-simulation-playground/
+      index.html
+      demo.js
+      README.md
+      vendor/
+        ape-ecs-v1.3.0.js
+        ape-ecs-MIT-LICENSE.txt
   scripts/
     serve.py
 ```
@@ -103,6 +110,7 @@ vibeSrc/
 | `projects/editor-command-studio/` | Editor architecture lab | Commands, history, tool plugins, state-driven inspector, and TypeScript contracts. |
 | `projects/gaussian-splat-render-lab/` | WebGL renderer lab | Gaussian-style point splats with tile buffers, LOD, culling, and performance metrics. |
 | `projects/simulation-sync-lab/` | Simulation bridge lab | Normalized asset contract and USD/MJCF/SDF/glTF adapter previews. |
+| `projects/ape-ecs-simulation-playground/` | Ape ECS architecture lab | MIT-attributed upstream Ape ECS browser build with components, systems, queries, dynamic composition, and serialization. |
 | `package.json` | Convenience scripts | Runs the Python static server through npm scripts. |
 | `scripts/serve.py` | Local static web server | Uses Python standard library, no dependencies. |
 | `src/features/` | Main feature library | One folder per feature. |

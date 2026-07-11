@@ -33,6 +33,7 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 - [`projects/editor-command-studio/`](./projects/editor-command-studio/) — a command bus, tool-plugin, state-management, and undo/redo architecture study with TypeScript contracts.
 - [`projects/gaussian-splat-render-lab/`](./projects/gaussian-splat-render-lab/) — a WebGL Gaussian-style splat renderer demonstrating tile culling, density LOD, and live performance metrics.
 - [`projects/simulation-sync-lab/`](./projects/simulation-sync-lab/) — normalized browser scene contracts with USD/MJCF/SDF/glTF adapters and revisioned transform patches.
+- [`projects/ape-ecs-simulation-playground/`](./projects/ape-ecs-simulation-playground/) — real Ape ECS browser simulation with registered components, system queries, dynamic composition, and world serialization.
 
 ## Run the local web server
 

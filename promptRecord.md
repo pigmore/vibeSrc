@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-11 — add Ape ECS simulation playground
+
+- **Goal:** Add a browser-runnable ECS demo grounded in the upstream `fritzy/ape-ecs` library.
+- **Prompt:** "https://github.com/fritzy/ape-ecs. base on ecs, build a demo of ecs"
+- **Context files:** Upstream `README.md`, `docs/Overview.md`, `docs/World.md`, `docs/System.md`, `docs/Entity.md`, local project listings, and static-demo conventions.
+- **Decision:** Vendor the MIT-licensed upstream v1.3.0 browser build alongside its license notice; run its actual `World`, `Component`, `System`, query, dynamic-component, and `getObject()` serialization APIs in a self-contained Canvas 2D simulation.
+- **Changed files:** `projects/ape-ecs-simulation-playground/`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Load the browser build locally, verify 18 live ECS entities, select one, dynamically add `Glow`, run the system group, inspect tick progression, and confirm the console has no errors.
+- **Follow-ups:** Add an import path for `world.createEntities()` snapshots, a query-change feed visualization, or a WebGL renderer driven by the same Ape ECS world.
+
 ## 2026-07-10 — add browser 3D editor portfolio labs
 
 - **Goal:** Create several browser-runnable demos that concretely address a senior browser 3D editor / simulation-editor job description.
