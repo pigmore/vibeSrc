@@ -30,6 +30,9 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 - [`projects/count-plus-one/`](./projects/count-plus-one/) — increments a counter by one on each click.
 - [`projects/nodeNote/`](./projects/nodeNote/) — visual idea canvas maintained as a Git submodule from [`pigmore/nodeNote`](https://github.com/pigmore/nodeNote).
 - [`projects/ecs-obj-editor/`](./projects/ecs-obj-editor/) — a vanilla JavaScript WebGL OBJ editor that demonstrates an Entity-Component-System architecture.
+- [`projects/editor-command-studio/`](./projects/editor-command-studio/) — a command bus, tool-plugin, state-management, and undo/redo architecture study with TypeScript contracts.
+- [`projects/gaussian-splat-render-lab/`](./projects/gaussian-splat-render-lab/) — a WebGL Gaussian-style splat renderer demonstrating tile culling, density LOD, and live performance metrics.
+- [`projects/simulation-sync-lab/`](./projects/simulation-sync-lab/) — normalized browser scene contracts with USD/MJCF/SDF/glTF adapters and revisioned transform patches.
 
 ## Run the local web server
 

@@ -31,6 +31,19 @@ vibeSrc/
       index.html
       editor.js
       README.md
+    editor-command-studio/
+      index.html
+      main.js
+      contracts.ts
+      README.md
+    gaussian-splat-render-lab/
+      index.html
+      main.js
+      README.md
+    simulation-sync-lab/
+      index.html
+      main.js
+      README.md
   scripts/
     serve.py
 ```
@@ -85,6 +98,9 @@ vibeSrc/
 | `projects/` | Static vanilla JavaScript demos | One folder per demo project. |
 | `projects/nodeNote/` | NodeNote demo submodule | Tracks `https://github.com/pigmore/nodeNote`. |
 | `projects/ecs-obj-editor/` | Vanilla JavaScript 3D editor | WebGL OBJ editor with an ECS architecture. |
+| `projects/editor-command-studio/` | Editor architecture lab | Commands, history, tool plugins, state-driven inspector, and TypeScript contracts. |
+| `projects/gaussian-splat-render-lab/` | WebGL renderer lab | Gaussian-style point splats with tile buffers, LOD, culling, and performance metrics. |
+| `projects/simulation-sync-lab/` | Simulation bridge lab | Normalized asset contract and USD/MJCF/SDF/glTF adapter previews. |
 | `package.json` | Convenience scripts | Runs the Python static server through npm scripts. |
 | `scripts/serve.py` | Local static web server | Uses Python standard library, no dependencies. |
 | `src/features/` | Main feature library | One folder per feature. |

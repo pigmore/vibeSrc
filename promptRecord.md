@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-10 — add browser 3D editor portfolio labs
+
+- **Goal:** Create several browser-runnable demos that concretely address a senior browser 3D editor / simulation-editor job description.
+- **Prompt:** Build demos for command-layer editor architecture, Gaussian splat rendering performance, and simulation synchronization across USD/MJCF/SDF/glTF.
+- **Context files:** `rules.md`, `tech-principle.md`, `README.md`, `projects/index.html`, and the existing `projects/ecs-obj-editor/` demo.
+- **Decision:** Keep the new demos dependency-free and static so they can be opened directly, while showing TypeScript contracts and renderer/system boundaries that can be connected to Three.js, WebGPU, Spark.js/gsplat.js, or engine bridges in production.
+- **Changed files:** `projects/editor-command-studio/`, `projects/gaussian-splat-render-lab/`, `projects/simulation-sync-lab/`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Type-check the command contracts, syntax-check each browser module, serve all routes, test command undo/redo and joint controls, inspect WebGL splat metrics, and publish a simulation transform patch in the browser.
+- **Follow-ups:** Add a real Three.js/WebGPU implementation, PLY/.splat loaders with depth sorting, worker-based streaming, live engine bridge endpoints, and CRDT collaboration if these move from portfolio labs to a product.
+
 ## 2026-07-10 — add homepage donation panel
 
 - **Goal:** Give visitors a clear way to support vibeSrc.
