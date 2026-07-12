@@ -63,7 +63,7 @@
   world.registerSystem("simulation", IntegrateSystem);
   world.registerSystem("simulation", LifetimeSystem);
   const state = { running: true, selectedId: null, systemRuns: 0, last: performance.now(), spawnIndex: 0, snapshotAt: 0 };
-  function spawnEntity() {
+  function spawnEntity(redraw = true) {
     state.spawnIndex += 1;
     const entity = world.createEntity({
       id: `particle-${Date.now()}-${state.spawnIndex}`,
@@ -78,8 +78,9 @@
     state.selectedId = entity.id;
     setStatus(`Created ${entity.id} through world.createEntity() with 4 components and the Simulated tag.`);
     renderUi();
+    if (redraw) draw();
   }
-  for (let index = 0; index < 18; index++) spawnEntity();
+  for (let index = 0; index < 18; index++) spawnEntity(false);
   state.selectedId = null;
 
   // The renderer uses a direct tag index while the systems above demonstrate persisted system queries.
