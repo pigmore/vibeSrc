@@ -26,7 +26,7 @@ http://127.0.0.1:8080/projects/ape-ecs-simulation-playground/
 
 ## Controls
 
-- **Spawn entity** — creates a composed Ape ECS entity.
+- **Add ball** — the header control and in-canvas `＋` control both create a composed Ape ECS entity without changing the fixed canvas height.
 - **Step system group** — runs the `simulation` system group once while paused or running.
 - **Pause** — freezes the frame loop without changing the ECS world.
 - **Click a dot** — selects its entity and displays component data.
