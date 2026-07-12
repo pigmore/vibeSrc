@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-13 — visualize Simulation Sync Lab contract state
+
+- **Goal:** Make the simulation bridge lifecycle legible as a spatial scene instead of only adapter text and event logs.
+- **Prompt:** "Simulation Sync Lab may i have 3d canvas to show what is going on? tell me how the sync lab works"
+- **Context files:** `projects/simulation-sync-lab/index.html`, `projects/simulation-sync-lab/main.js`, `projects/simulation-sync-lab/README.md`, `rules.md`, and static-demo conventions.
+- **Decision:** Add a dependency-free perspective Canvas 2D visualizer driven by the same normalized assets, selected ID, revision, and target adapter used by the contract UI. It supports orbit/zoom/canvas selection and visibly pulses a published patch toward the current target.
+- **Changed files:** `projects/simulation-sync-lab/index.html`, `projects/simulation-sync-lab/main.js`, `projects/simulation-sync-lab/scene-canvas.js`, `projects/simulation-sync-lab/README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Local route, canvas rendering, transform-to-canvas synchronization, patch publication pulse, canvas selection, and browser console checks.
+- **Follow-ups:** Replace the perspective Canvas 2D projection with a shared WebGL/WebGPU scene renderer only if the lab needs real mesh loading, simulation-scale entity counts, or GPU picking.
+
 ## 2026-07-11 — add Transform Gizmo Lab
 
 - **Goal:** Add a portfolio-grade browser demo for direct 3D transform interaction.

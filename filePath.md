@@ -49,6 +49,7 @@ vibeSrc/
     simulation-sync-lab/
       index.html
       main.js
+      scene-canvas.js          # Perspective scene visualizer fed by normalized sync state
       README.md
     ape-ecs-simulation-playground/
       index.html
