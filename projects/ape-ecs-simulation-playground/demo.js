@@ -131,7 +131,6 @@
   }
 
   $("#spawn").addEventListener("click", spawnEntity);
-  $("#spawn-canvas").addEventListener("click", spawnEntity);
   $("#step").addEventListener("click", () => { runStep(1 / 60); setStatus("Ran Gravity, Integrate, and Lifetime systems for one ECS tick."); renderUi(); });
   $("#toggle-run").addEventListener("click", (event) => { state.running = !state.running; event.currentTarget.textContent = state.running ? "Pause" : "Resume"; renderUi(); });
   $("#toggle-glow").addEventListener("click", () => { const entity = selected(); if (!entity) return; if (entity.has("Glow")) { entity.removeComponent(entity.c.glow); setStatus(`Removed Glow from ${entity.id}; persisted queries will refresh at the next tick.`); } else { entity.addComponent({ type: "Glow", key: "glow", intensity: .85 }); setStatus(`Added Glow to ${entity.id} with entity.addComponent().`); } world.updateIndexes(); renderUi(); });
