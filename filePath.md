@@ -37,6 +37,10 @@ vibeSrc/
       main.ts                 # TypeScript reference implementation
       contracts.ts
       README.md
+    transform-gizmo-lab/
+      index.html
+      main.js
+      README.md
     gaussian-splat-render-lab/
       index.html
       main.js
@@ -108,6 +112,7 @@ vibeSrc/
 | `projects/nodeNote/` | NodeNote demo submodule | Tracks `https://github.com/pigmore/nodeNote`. |
 | `projects/ecs-obj-editor/` | Vanilla JavaScript 3D editor | WebGL OBJ editor with an ECS architecture. |
 | `projects/editor-command-studio/` | Editor architecture lab | Commands, history, tool plugins, state-driven inspector, and TypeScript contracts. |
+| `projects/transform-gizmo-lab/` | Transform tooling lab | Direct transform gizmos with per-axis picking, quaternion rotation, local/world space, snapping, and command history. |
 | `projects/gaussian-splat-render-lab/` | WebGL renderer lab | Gaussian-style point splats with tile buffers, LOD, culling, and performance metrics. |
 | `projects/simulation-sync-lab/` | Simulation bridge lab | Normalized asset contract and USD/MJCF/SDF/glTF adapter previews. |
 | `projects/ape-ecs-simulation-playground/` | Ape ECS architecture lab | MIT-attributed upstream Ape ECS browser build with components, systems, queries, dynamic composition, and serialization. |

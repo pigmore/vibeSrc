@@ -31,6 +31,7 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 - [`projects/nodeNote/`](./projects/nodeNote/) — visual idea canvas maintained as a Git submodule from [`pigmore/nodeNote`](https://github.com/pigmore/nodeNote).
 - [`projects/ecs-obj-editor/`](./projects/ecs-obj-editor/) — a vanilla JavaScript WebGL OBJ editor that demonstrates an Entity-Component-System architecture.
 - [`projects/editor-command-studio/`](./projects/editor-command-studio/) — a command bus, tool-plugin, state-management, and undo/redo architecture study with TypeScript contracts.
+- [`projects/transform-gizmo-lab/`](./projects/transform-gizmo-lab/) — direct 3D transform tooling with per-axis handles, quaternion rotation, local/world space, snapping, and reversible history.
 - [`projects/gaussian-splat-render-lab/`](./projects/gaussian-splat-render-lab/) — a WebGL Gaussian-style splat renderer demonstrating tile culling, density LOD, and live performance metrics.
 - [`projects/simulation-sync-lab/`](./projects/simulation-sync-lab/) — normalized browser scene contracts with USD/MJCF/SDF/glTF adapters and revisioned transform patches.
 - [`projects/ape-ecs-simulation-playground/`](./projects/ape-ecs-simulation-playground/) — real Ape ECS browser simulation with registered components, system queries, dynamic composition, and world serialization.

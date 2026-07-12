@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-11 — add Transform Gizmo Lab
+
+- **Goal:** Add a portfolio-grade browser demo for direct 3D transform interaction.
+- **Prompt:** Build the recommended Transform Gizmo Lab for 3D-editor-oriented source examples.
+- **Context files:** `projects/ecs-obj-editor/README.md`, `projects/editor-command-studio/README.md`, `projects/index.html`, `rules.md`, and static-demo conventions.
+- **Decision:** Build a dependency-free Canvas projection lab that keeps transform state explicit—position, quaternion rotation, and scale—while exposing per-axis gizmo handles, local/world reference space, snapping, selection, and command-based history.
+- **Changed files:** `projects/transform-gizmo-lab/`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Syntax-check the browser module, serve its route, add/select an object, perform inspector and pointer-driven gizmo transforms, undo history, and inspect browser errors.
+- **Follow-ups:** Add proper perspective ray-plane intersections, plane handles, multi-selection/pivot modes, parent transform propagation, GPU ID picking, and a WebGL/WebGPU backend.
+
 ## 2026-07-11 — add Ape ECS simulation playground
 
 - **Goal:** Add a browser-runnable ECS demo grounded in the upstream `fritzy/ape-ecs` library.
