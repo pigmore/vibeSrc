@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-13 — add connected robot-cell sync sample
+
+- **Goal:** Make the Simulation Sync Lab’s robot arm, wrist joint, and workbench read as one meaningful sample scene rather than three generic boxes.
+- **Prompt:** "gen a sample for robot arm wrist joint and workbench"
+- **Context files:** `projects/simulation-sync-lab/main.js`, `projects/simulation-sync-lab/scene-canvas.js`, and `projects/simulation-sync-lab/README.md`.
+- **Decision:** Seed a workbench-mounted arm base with a separate wrist-joint endpoint. The canvas composes the robot arm toward the wrist’s normalized transform, while every asset retains its own stable ID and independently serializable patch.
+- **Changed files:** `projects/simulation-sync-lab/main.js`, `projects/simulation-sync-lab/scene-canvas.js`, `projects/simulation-sync-lab/README.md`, `promptRecord.md`.
+- **Verification:** Syntax-check scripts; load the sample scene; verify the wrist transform moves the visual endpoint and generated adapter preview; publish a wrist patch and inspect the event/status flow.
+- **Follow-ups:** Add a real kinematic chain, joint-limit widgets, collision proxy geometry, or a USD/glTF mesh loader if this demo grows into a robot workcell editor.
+
 ## 2026-07-13 — visualize Simulation Sync Lab contract state
 
 - **Goal:** Make the simulation bridge lifecycle legible as a spatial scene instead of only adapter text and event logs.

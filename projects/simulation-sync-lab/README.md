@@ -19,6 +19,16 @@ format decoder -> normalized editor scene -> revisioned patch -> engine adapter
 USD / MJCF / SDF / glTF                        Isaac / MuJoCo / Unreal / Genesis
 ```
 
+## Sample robot cell
+
+The default normalized scene is a small, connected robot-cell sample:
+
+- **Workbench** — a USD-style static support surface; the arm base is mounted on its top.
+- **Robot arm** — a glTF-style articulated visual rooted at its own transform.
+- **Wrist joint** — MJCF-style revolute end-effector metadata; its normalized transform is both independently patchable and used as the arm’s visual endpoint.
+
+This relationship is intentional: moving the wrist joint changes its own serialized adapter payload and updates the arm’s visible endpoint in the same canonical canvas. It demonstrates that visual composition can depend on shared normalized state without changing the stable identity or engine payload boundary.
+
 ## Sync lifecycle
 
 1. An adapter decodes a source concept into the normalized scene; the browser keeps a stable asset ID plus transform and optional joint/material data.

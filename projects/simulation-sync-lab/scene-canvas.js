@@ -76,9 +76,7 @@
     context.restore();
   }
 
-  function cuboidFaces(asset, rect) {
-    const position = asset.transform;
-    const size = asset.id === "workbench" ? [2.6, 0.7, 1.15] : asset.id === "wrist-joint" ? [0.46, 0.46, 0.46] : [0.72, 1.6, 0.72];
+  function cuboidFaces(position, size, rect) {
     const [sx, sy, sz] = size.map((value) => value / 2);
     const vertices = [
       [-sx, -sy, -sz], [sx, -sy, -sz], [sx, sy, -sz], [-sx, sy, -sz],
@@ -93,11 +91,8 @@
     ];
   }
 
-  function drawAsset(asset, rect) {
-    const colors = palette[asset.id] || palette.fallback;
-    const selected = asset.id === scene.selectedId;
-    const faces = cuboidFaces(asset, rect).sort((a, b) => (a.reduce((total, point) => total + point.depth, 0) - b.reduce((total, point) => total + point.depth, 0)));
-    context.save();
+  function drawCuboid(position, size, colors, selected, rect) {
+    const faces = cuboidFaces(position, size, rect).sort((a, b) => a.reduce((total, point) => total + point.depth, 0) - b.reduce((total, point) => total + point.depth, 0));
     faces.forEach((face, index) => {
       path(face);
       context.fillStyle = index === 3 ? `${colors.fill}cc` : index === 1 ? `${colors.fill}99` : `${colors.fill}73`;
@@ -106,22 +101,75 @@
       context.lineWidth = selected ? 2.5 : 1;
       context.stroke();
     });
+  }
 
-    const anchor = project([asset.transform[0], asset.transform[1] + (asset.id === "workbench" ? 0.55 : 1.08), asset.transform[2]], rect);
+  function drawLabel(asset, anchor, selected, colors) {
     if (selected) {
       context.strokeStyle = "rgba(255,255,255,.72)";
       context.setLineDash([4, 4]);
-      context.beginPath(); context.arc(anchor.x, anchor.y, 22, 0, Math.PI * 2); context.stroke(); context.setLineDash([]);
+      context.beginPath(); context.arc(anchor.x, anchor.y, 23, 0, Math.PI * 2); context.stroke(); context.setLineDash([]);
     }
     context.fillStyle = "rgba(5, 13, 21, .83)";
     context.strokeStyle = selected ? "#ffffff" : `${colors.edge}90`;
     context.lineWidth = 1;
-    const label = asset.name;
     context.font = "700 11px system-ui";
-    const labelWidth = context.measureText(label).width + 14;
+    const labelWidth = context.measureText(asset.name).width + 14;
     context.beginPath(); context.roundRect(anchor.x - labelWidth / 2, anchor.y - 27, labelWidth, 19, 5); context.fill(); context.stroke();
-    context.fillStyle = "#f2f8ff"; context.textAlign = "center"; context.fillText(label, anchor.x, anchor.y - 14); context.textAlign = "start";
-    hitTargets.push({ id: asset.id, x: anchor.x, y: anchor.y, radius: Math.max(36, anchor.scale * 0.6) });
+    context.fillStyle = "#f2f8ff"; context.textAlign = "center"; context.fillText(asset.name, anchor.x, anchor.y - 14); context.textAlign = "start";
+    hitTargets.push({ id: asset.id, x: anchor.x, y: anchor.y, radius: Math.max(38, anchor.scale * 0.65) });
+  }
+
+  function drawWorkbench(asset, selected, rect) {
+    const [x, y, z] = asset.transform;
+    const colors = palette.workbench;
+    drawCuboid([x, y, z], [3.3, .28, 1.7], colors, selected, rect);
+    for (const dx of [-1.35, 1.35]) for (const dz of [-.62, .62]) drawCuboid([x + dx, y - .48, z + dz], [.18, .82, .18], colors, selected, rect);
+    drawLabel(asset, project([x - 1.35, y + .45, z], rect), selected, colors);
+  }
+
+  function drawRobotArm(asset, selected, rect) {
+    const wrist = scene.assets.find((entry) => entry.id === "wrist-joint");
+    const [x, y, z] = asset.transform;
+    const end = wrist?.transform || [x + 1.15, y + .9, z];
+    const points = [[x, y, z], [x, y + .42, z], [x + .38, y + .88, z], end].map((point) => project(point, rect));
+    const colors = palette["robot-arm"];
+    drawCuboid([x, y - .26, z], [.58, .3, .58], colors, selected, rect);
+    context.lineCap = "round";
+    for (let index = 0; index < points.length - 1; index += 1) {
+      context.strokeStyle = selected ? "#ffffff" : colors.fill;
+      context.lineWidth = index === 0 ? 15 : 13;
+      context.beginPath(); context.moveTo(points[index].x, points[index].y); context.lineTo(points[index + 1].x, points[index + 1].y); context.stroke();
+      context.strokeStyle = colors.edge; context.lineWidth = 2;
+      context.beginPath(); context.moveTo(points[index].x, points[index].y); context.lineTo(points[index + 1].x, points[index + 1].y); context.stroke();
+    }
+    for (const point of points.slice(0, -1)) {
+      context.fillStyle = "#0b1722"; context.strokeStyle = selected ? "#ffffff" : colors.edge; context.lineWidth = 2;
+      context.beginPath(); context.arc(point.x, point.y, 9, 0, Math.PI * 2); context.fill(); context.stroke();
+    }
+    drawLabel(asset, project([x - .62, y + 1.26, z], rect), selected, colors);
+  }
+
+  function drawWristJoint(asset, selected, rect) {
+    const colors = palette["wrist-joint"];
+    const anchor = project(asset.transform, rect);
+    context.fillStyle = colors.fill; context.strokeStyle = selected ? "#ffffff" : colors.edge; context.lineWidth = selected ? 2.5 : 1.5;
+    context.beginPath(); context.ellipse(anchor.x, anchor.y, 14, 9, 0, 0, Math.PI * 2); context.fill(); context.stroke();
+    context.strokeStyle = colors.edge; context.lineWidth = 5; context.lineCap = "round";
+    context.beginPath(); context.moveTo(anchor.x + 9, anchor.y - 2); context.lineTo(anchor.x + 21, anchor.y - 10); context.moveTo(anchor.x + 9, anchor.y + 2); context.lineTo(anchor.x + 21, anchor.y + 10); context.stroke();
+    drawLabel(asset, project([asset.transform[0] + .42, asset.transform[1] + .5, asset.transform[2]], rect), selected, colors);
+  }
+
+  function drawAsset(asset, rect) {
+    const selected = asset.id === scene.selectedId;
+    context.save();
+    if (asset.id === "workbench") drawWorkbench(asset, selected, rect);
+    else if (asset.id === "robot-arm") drawRobotArm(asset, selected, rect);
+    else if (asset.id === "wrist-joint") drawWristJoint(asset, selected, rect);
+    else {
+      const colors = palette.fallback;
+      drawCuboid(asset.transform, [.6, .6, .6], colors, selected, rect);
+      drawLabel(asset, project([asset.transform[0], asset.transform[1] + .55, asset.transform[2]], rect), selected, colors);
+    }
     context.restore();
   }
 

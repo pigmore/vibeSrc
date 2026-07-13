@@ -2,9 +2,9 @@ const $ = (selector) => document.querySelector(selector);
 const state = {
   revision: 0, selectedId: "robot-arm", target: "Isaac Sim", format: "USD", events: [],
   assets: new Map([
-    ["robot-arm", { id: "robot-arm", name: "Robot arm", source: "glTF mesh", transform: [0, .8, 0], material: "steel-blue", joint: { type: "revolute", lower: -2.1, upper: 2.1 } }],
-    ["wrist-joint", { id: "wrist-joint", name: "Wrist joint", source: "MJCF joint", transform: [.5, 1.15, 0], material: "amber", joint: { type: "revolute", lower: -1.57, upper: 1.57 } }],
-    ["workbench", { id: "workbench", name: "Workbench", source: "USD prim", transform: [0, 0, -1.6], material: "matte-gray" }],
+    ["robot-arm", { id: "robot-arm", name: "Robot arm", source: "glTF mesh", transform: [-.42, .82, -.2], material: "steel-blue", joint: { type: "revolute", lower: -2.1, upper: 2.1 } }],
+    ["wrist-joint", { id: "wrist-joint", name: "Wrist joint", source: "MJCF joint", transform: [.78, 1.72, -.2], material: "amber", joint: { type: "revolute", lower: -1.57, upper: 1.57 } }],
+    ["workbench", { id: "workbench", name: "Workbench", source: "USD prim", transform: [0, .4, -.2], material: "matte-gray" }],
   ]),
 };
 const formats = ["USD", "MJCF", "SDF", "glTF"];
