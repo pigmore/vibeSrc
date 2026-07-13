@@ -22,6 +22,15 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-13 — add local FFmpeg.wasm movie merge demo
+
+- **Goal:** Add a browser-based project that merges ordered movie clips with real FFmpeg.wasm processing.
+- **Prompt:** "a new proj can merge movies via ffmpeg wasm"
+- **Decision:** Use the pinned `@ffmpeg/ffmpeg` 0.12.10 UMD runtime and `@ffmpeg/core` 0.12.6, loaded on demand from unpkg. Clips are copied into FFmpeg’s local in-memory filesystem; compatibility and stream-copy modes produce a temporary MP4 Blob download without an application upload endpoint.
+- **Changed files:** `projects/movie-merge-wasm/`, project listings, README, path map, and this log.
+- **Verification:** Syntax-check the browser runtime; serve the page; verify the pinned UMD/core endpoints; exercise runtime loading and a two-clip merge with generated MP4 fixtures.
+- **Follow-ups:** Move the core to a first-party pinned static asset, add a Worker/Offscreen UI path, inspect codecs/duration before merge, and support silent clips in compatibility mode.
+
 ## 2026-07-13 — add browser image storage optimizer
 
 - **Goal:** Add a practical TinyPNG-style image-compression workflow that helps users shrink files before storage/upload.

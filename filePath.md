@@ -30,6 +30,10 @@ vibeSrc/
       index.html
       main.js
       README.md
+    movie-merge-wasm/
+      index.html
+      main.js
+      README.md
     nodeNote/                 # Git submodule: https://github.com/pigmore/nodeNote
     ecs-obj-editor/
       index.html
