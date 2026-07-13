@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://kalidokit.glitch.me/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- HTML Meta Tags -->
+    <title>Camera Avatar Capture — vibeSrc</title>
+    <meta name="description" content="Drive VRM avatar face and body rigs from a browser webcam.">
+
+    <!-- Twitter Meta Tags -->
+      <link rel="shortcut icon" href="./favicon.ico">
+
+    <!--     Basic Three.js -->
+    <script src="./facetrack_files/three.js"></script>
+    <!--     GLTF Loader for Three.js -->
+    <script src="./facetrack_files/GLTFLoader.js"></script>
+    <!--     Orbit Controls for Three.js -->
+    <script src="./facetrack_files/OrbitControls.js"></script>
+    <!--     VRM Loader for Three.js -->
+    <script src="./facetrack_files/three-vrm.js"></script>
+    <!--     Mediapipe or Tensorflow.js -->
+    <script src="./facetrack_files/holistic.js" crossorigin="anonymous"></script>
+
+    <!--     Mediapipe Drawing Tools -->
+    <script src="./facetrack_files/drawing_utils.js" crossorigin="anonymous"></script>
+    <!--     Kalidokit Kinematic Solver -->
+    <script src="./facetrack_files/kalidokit.umd.js"></script>
+    <link rel="stylesheet" href="./facetrack_files/style.css">
+  </head>
+  <body>
+    <a class="projectBack" href="../">← Projects</a>
+    <div class="switchBtn">
+      <div>
+        <button onclick="changeCharacter(false)">
+          <img class='switchBtnImg reverse' src="./assets/icon_jiantou.svg" alt="">
+        </button>
+      </div>
+      <div>
+        <button onclick="changeCharacter(true)">
+          <img class='switchBtnImg ' src="./assets/icon_jiantou.svg" alt="">
+        </button>
+      </div>
+    </div>
+    <div class="atributteBtn">
+      <button onclick="showFloat('accessory')"><img src="./assets/iconcloth.svg" alt=""></button>
+      <button onclick="showFloat('faceAdjust')"><img src="./assets/iconface.svg" alt=""></button>
+    </div>
+    <button class="cameraButton" id="cameraButton" type="button" onclick="startCamera()">Enable camera</button>
+    <div class="preview">
+      <video class="input_video" width="1280px" height="1280px" autoplay="" muted="" playsinline=""></video>
+      <canvas class="guides" width="640" height="480"></canvas>
+      <!-- <p class="notranslate">
+        <button
+          onclick="changeCharacter('ashtra')"
+        >ash</button>
+        <button
+          onclick="changeCharacter('tomboy')"
+        >やんじゃった</button>
+        <button
+          onclick="changeCharacter('filo')"
+        >filo</button>
+        <button
+          onclick="changeCharacter('viki')"
+        >viki</button>
+      </p> -->
+    </div>
+    <div class="notranslate">
+      <img src="./assets/portal_logo.png" alt=""
+        style='height: 80px;
+        width: auto;
+        padding: 20px;'
+      >
+    </div>
+    <div
+      class="floatDiv"
+      id="floatDiv"
+      onclick="stopPop(event)"
+    >
+      <div>
+        <img src="./assets/icon_close.svg" onclick="hideFloat()" alt="">
+      </div>
+      <div id="accessory" style="display:none;">
+        <h1>Astro</h1>
+        <p>展示/隐藏衣服、配件或身体部位。</p>
+        <br/>
+        <button onclick="changeClothes()" id='clothesBtn'>
+          衣服
+        </button>
+      </div>
+      <div id="faceAdjust" style="display:none;">
+        <h1>Astro</h1>
+        <p>滑动调整条，改变人物脸部特征</p>
+        <p>眼睛:
+          <input type="range" min = '0.85' max='1.4' value='1.0' step="0.01"
+              onchange="changeInput(this.value)"
+          >
+        </p>
+      </div>
+
+
+    </div>
+    <div
+      class = "loaderContainer"
+      id = "loaderContainer"
+
+    >
+
+        <div class = "loader">
+        </div>
+
+    </div>
+
+
+    <script src="./facetrack_files/script.js"></script>
+
+
+</body></html>

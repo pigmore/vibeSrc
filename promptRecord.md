@@ -22,7 +22,17 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
-## 2026-07-13 — add connected robot-cell sync sample
+## 2026-07-11 — add camera avatar capture demo
+
+- **Goal:** Add the user-provided browser camera capture and VRM avatar-rigging demo as a standalone vibeSrc project.
+- **Prompt:** "here is my camera capture demo, add to videsrc as a new porj"
+- **Context files:** User-provided local `avatar` demo entry point, tracking script, styles, bundled MediaPipe runtime assets, local VRM models, and the vibeSrc project listings.
+- **Decision:** Preserve the working no-build browser runtime and its local MediaPipe/VRM assets, omit the source repository's `.git` metadata and Windows-only launcher, add project navigation, and document browser permission and third-party asset boundaries.
+- **Changed files:** `projects/camera-avatar-capture/`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Serve the copied entry point and all essential local runtime/model routes; verify the avatar initializes without camera permission, the Enable camera control is present, and the browser console reports no initialization errors. Camera permission itself requires an interactive user grant.
+- **Follow-ups:** Audit/reconcile individual upstream dependency and VRM-model licenses before reuse outside this portfolio/demo context; add an explicit camera stop control if the page evolves into a production capture tool.
+
+## 2026-07-11 — add Ape ECS simulation playground
 
 - **Goal:** Make the Simulation Sync Lab’s robot arm, wrist joint, and workbench read as one meaningful sample scene rather than three generic boxes.
 - **Prompt:** "gen a sample for robot arm wrist joint and workbench"

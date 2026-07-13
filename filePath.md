@@ -58,6 +58,13 @@ vibeSrc/
       vendor/
         ape-ecs-v1.3.0.js
         ape-ecs-MIT-LICENSE.txt
+    camera-avatar-capture/
+      index.html
+      README.md
+      facetrack_files/          # Three.js, VRM, Kalidokit, MediaPipe scripts, and styles
+      npm/@mediapipe/           # Local MediaPipe Holistic model/runtime files
+      vrm/                       # Local VRM avatar models
+      assets/                    # Original avatar UI assets
   scripts/
     serve.py
 ```
@@ -117,6 +124,7 @@ vibeSrc/
 | `projects/gaussian-splat-render-lab/` | WebGL renderer lab | Gaussian-style point splats with tile buffers, LOD, culling, and performance metrics. |
 | `projects/simulation-sync-lab/` | Simulation bridge lab | Normalized asset contract and USD/MJCF/SDF/glTF adapter previews. |
 | `projects/ape-ecs-simulation-playground/` | Ape ECS architecture lab | MIT-attributed upstream Ape ECS browser build with components, systems, queries, dynamic composition, and serialization. |
+| `projects/camera-avatar-capture/` | Browser avatar capture demo | Webcam-driven VRM face, pose, and hand rigging with local MediaPipe/Kalidokit/Three.js assets. |
 | `package.json` | Convenience scripts | Runs the Python static server through npm scripts. |
 | `scripts/serve.py` | Local static web server | Uses Python standard library, no dependencies. |
 | `src/features/` | Main feature library | One folder per feature. |

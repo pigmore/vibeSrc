@@ -35,6 +35,7 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 - [`projects/gaussian-splat-render-lab/`](./projects/gaussian-splat-render-lab/) — a WebGL Gaussian-style splat renderer demonstrating tile culling, density LOD, and live performance metrics.
 - [`projects/simulation-sync-lab/`](./projects/simulation-sync-lab/) — normalized browser scene contracts with USD/MJCF/SDF/glTF adapters and revisioned transform patches.
 - [`projects/ape-ecs-simulation-playground/`](./projects/ape-ecs-simulation-playground/) — real Ape ECS browser simulation with registered components, system queries, dynamic composition, and world serialization.
+- [`projects/camera-avatar-capture/`](./projects/camera-avatar-capture/) — browser webcam capture driving locally bundled VRM avatars with MediaPipe Holistic, Kalidokit, and Three.js.
 
 ## Run the local web server
 

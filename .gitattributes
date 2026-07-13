@@ -1,0 +1,3 @@
+# Preserve imported third-party browser runtimes byte-for-byte, including their original line endings and whitespace.
+projects/camera-avatar-capture/facetrack_files/*.js -whitespace
+projects/camera-avatar-capture/npm/** -whitespace
