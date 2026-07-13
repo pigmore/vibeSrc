@@ -28,6 +28,7 @@ Open [`index.html`](./index.html) in a browser to see the welcome page and the f
 
 - [`projects/hello-world/`](./projects/hello-world/) — writes a friendly greeting with plain JS.
 - [`projects/count-plus-one/`](./projects/count-plus-one/) — increments a counter by one on each click.
+- [`projects/image-storage-optimizer/`](./projects/image-storage-optimizer/) — browser-only batch image resizing/re-encoding with WebP/JPEG/PNG outputs and storage comparisons.
 - [`projects/nodeNote/`](./projects/nodeNote/) — visual idea canvas maintained as a Git submodule from [`pigmore/nodeNote`](https://github.com/pigmore/nodeNote).
 - [`projects/ecs-obj-editor/`](./projects/ecs-obj-editor/) — a vanilla JavaScript WebGL OBJ editor that demonstrates an Entity-Component-System architecture.
 - [`projects/editor-command-studio/`](./projects/editor-command-studio/) — a command bus, tool-plugin, state-management, and undo/redo architecture study with TypeScript contracts.

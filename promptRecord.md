@@ -22,6 +22,16 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 
 ## Records
 
+## 2026-07-13 — add browser image storage optimizer
+
+- **Goal:** Add a practical TinyPNG-style image-compression workflow that helps users shrink files before storage/upload.
+- **Prompt:** "add a new project like tinypng.com to optimize the imgae storage size"
+- **Context files:** `rules.md`, `coding.md`, existing project listings, and static-demo conventions.
+- **Decision:** Build a dependency-free local browser pipeline using image decode, Canvas downscaling, and WebP/JPEG/PNG re-encoding. The UI processes batches sequentially, compares original/optimized byte sizes, and exposes individual Blob downloads without uploading image bytes.
+- **Changed files:** `projects/image-storage-optimizer/`, `index.html`, `projects/index.html`, `README.md`, `filePath.md`, `promptRecord.md`.
+- **Verification:** Syntax-check runtime code; serve all entry routes; inject a generated PNG through the real file-input path; confirm output dimensions/size reduction, download link, and browser console health.
+- **Follow-ups:** Add a worker/OffscreenCanvas path, EXIF orientation handling, responsive derivative presets, or a server-backed libvips pipeline for production-scale processing.
+
 ## 2026-07-11 — add camera avatar capture demo
 
 - **Goal:** Add the user-provided browser camera capture and VRM avatar-rigging demo as a standalone vibeSrc project.
@@ -32,7 +42,7 @@ Add a new entry when a prompt meaningfully changes the project direction, archit
 - **Verification:** Serve the copied entry point and all essential local runtime/model routes; verify the avatar initializes without camera permission, the Enable camera control is present, and the browser console reports no initialization errors. Camera permission itself requires an interactive user grant.
 - **Follow-ups:** Audit/reconcile individual upstream dependency and VRM-model licenses before reuse outside this portfolio/demo context; add an explicit camera stop control if the page evolves into a production capture tool.
 
-## 2026-07-11 — add Ape ECS simulation playground
+## 2026-07-13 — add connected robot-cell sync sample
 
 - **Goal:** Make the Simulation Sync Lab’s robot arm, wrist joint, and workbench read as one meaningful sample scene rather than three generic boxes.
 - **Prompt:** "gen a sample for robot arm wrist joint and workbench"

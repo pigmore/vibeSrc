@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Image Storage Optimizer — vibeSrc</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #071118;
+        --panel: #0e1d27;
+        --panel-strong: #122937;
+        --border: #254354;
+        --text: #eaf7f8;
+        --muted: #a2bbc2;
+        --cyan: #5eead4;
+        --blue: #70b6ff;
+        --amber: #ffcf70;
+        --danger: #ff8295;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body { min-width: 320px; min-height: 100vh; margin: 0; color: var(--text); background: radial-gradient(circle at 4% 0%, #123744 0, transparent 33rem), radial-gradient(circle at 100% 80%, #1b334e 0, transparent 34rem), var(--bg); }
+      button, input, select { font: inherit; }
+      button { cursor: pointer; }
+      a { color: inherit; }
+      .app { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 26px 0 56px; }
+      .topbar { display: flex; gap: 16px; align-items: center; justify-content: space-between; }
+      .brand { display: flex; align-items: center; gap: 12px; font-size: 1rem; font-weight: 900; letter-spacing: -.03em; }
+      .brand-mark { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 12px; color: #032019; background: linear-gradient(135deg, var(--cyan), var(--blue)); font-size: 1.25rem; }
+      .brand small { display: block; margin-top: 2px; color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+      .button { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 0 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel); color: var(--text); font-size: .8rem; font-weight: 800; text-decoration: none; transition: border-color .16s, background .16s, transform .16s; }
+      .button:hover, .button:focus-visible { border-color: var(--cyan); background: var(--panel-strong); outline: none; transform: translateY(-1px); }
+      .button.primary { border-color: transparent; color: #06221c; background: var(--cyan); }
+      .button.primary:hover, .button.primary:focus-visible { background: #a2f8e7; }
+      .button:disabled { cursor: not-allowed; opacity: .45; transform: none; }
+      .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 30px; align-items: center; margin-top: 28px; padding: clamp(26px, 5vw, 56px); border: 1px solid rgba(94, 234, 212, .24); border-radius: 26px; background: linear-gradient(135deg, rgba(19, 54, 62, .9), rgba(13, 28, 40, .94)); box-shadow: 0 24px 80px rgba(0, 0, 0, .28); }
+      .eyebrow { margin: 0 0 12px; color: var(--cyan); font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+      h1 { max-width: 800px; margin: 0; font-size: clamp(2.5rem, 6vw, 5.7rem); line-height: .92; letter-spacing: -.07em; }
+      .lead { max-width: 650px; margin: 20px 0 0; color: var(--muted); font-size: 1.03rem; line-height: 1.7; }
+      .privacy { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 16px; border: 1px solid rgba(112, 182, 255, .26); border-radius: 14px; background: rgba(5, 13, 20, .44); }
+      .privacy-icon { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 10px; color: #cce8ff; background: rgba(112, 182, 255, .16); }
+      .privacy strong { display: block; font-size: .85rem; }
+      .privacy p { margin: 4px 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
+      .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; margin-top: 20px; }
+      .dropzone { position: relative; display: grid; min-height: 330px; place-items: center; overflow: hidden; padding: 34px; border: 1.5px dashed rgba(94, 234, 212, .54); border-radius: 24px; background: rgba(10, 26, 36, .78); text-align: center; transition: border-color .16s, background .16s, transform .16s; }
+      .dropzone.drag-active { border-color: var(--cyan); background: rgba(94, 234, 212, .12); transform: scale(1.005); }
+      .dropzone:focus-visible { outline: 3px solid rgba(94, 234, 212, .55); outline-offset: 3px; }
+      .dropzone-inner { max-width: 500px; }
+      .upload-icon { display: grid; width: 68px; height: 68px; place-items: center; margin: 0 auto 16px; border-radius: 20px; color: #05231d; background: linear-gradient(135deg, var(--cyan), var(--blue)); font-size: 1.7rem; font-weight: 900; }
+      .dropzone h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2.15rem); letter-spacing: -.04em; }
+      .dropzone p { margin: 10px auto 18px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+      .formats { margin: 14px 0 0; color: #93b8c0; font-size: .71rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+      .dropzone input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+      .settings { align-self: start; padding: 18px; border: 1px solid var(--border); border-radius: 18px; background: rgba(14, 29, 39, .9); }
+      .settings h2 { margin: 0; font-size: 1rem; }
+      .settings > p { margin: 6px 0 18px; color: var(--muted); font-size: .75rem; line-height: 1.45; }
+      label { display: grid; gap: 7px; margin-top: 14px; color: var(--muted); font-size: .72rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+      select, input[type="number"] { width: 100%; min-height: 40px; padding: 0 10px; border: 1px solid var(--border); border-radius: 8px; background: #07141d; color: var(--text); }
+      input[type="range"] { width: 100%; accent-color: var(--cyan); }
+      .range-row { display: flex; align-items: center; gap: 10px; }
+      .value { min-width: 44px; padding: 5px 7px; border: 1px solid var(--border); border-radius: 7px; color: var(--cyan); background: #07141d; font-size: .77rem; text-align: center; }
+      .setting-hint { margin: 6px 0 0; color: var(--muted); font-size: .71rem; line-height: 1.45; }
+      .summary { display: none; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+      .summary.visible { display: grid; }
+      .metric { padding: 13px; border: 1px solid var(--border); border-radius: 12px; background: rgba(8, 20, 29, .78); }
+      .metric strong { display: block; color: var(--cyan); font-size: 1.2rem; letter-spacing: -.04em; }
+      .metric span { display: block; margin-top: 3px; color: var(--muted); font-size: .69rem; font-weight: 800; text-transform: uppercase; }
+      .result-section { margin-top: 18px; }
+      .result-header { display: flex; align-items: end; justify-content: space-between; gap: 14px; }
+      .result-header h2 { margin: 0; font-size: 1.25rem; letter-spacing: -.03em; }
+      .result-header p { margin: 4px 0 0; color: var(--muted); font-size: .78rem; }
+      .results { display: grid; gap: 10px; margin-top: 12px; }
+      .empty { padding: 28px; border: 1px dashed var(--border); border-radius: 15px; color: var(--muted); font-size: .85rem; text-align: center; }
+      .result { display: grid; grid-template-columns: 86px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 15px; background: rgba(14, 29, 39, .9); }
+      .preview { display: grid; width: 86px; height: 64px; place-items: center; overflow: hidden; border-radius: 9px; background: #06121a; }
+      .preview img { width: 100%; height: 100%; object-fit: cover; }
+      .result h3 { overflow: hidden; margin: 0; font-size: .88rem; text-overflow: ellipsis; white-space: nowrap; }
+      .result-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; color: var(--muted); font-size: .72rem; }
+      .pill { padding: 3px 6px; border: 1px solid var(--border); border-radius: 99px; background: #07141d; }
+      .saving { color: var(--cyan); font-weight: 900; }
+      .result-actions { display: grid; justify-items: end; gap: 7px; }
+      .download { min-height: 34px; padding: 0 10px; border: 1px solid rgba(94, 234, 212, .44); border-radius: 8px; color: #bffdf1; background: rgba(94, 234, 212, .09); font-size: .74rem; font-weight: 900; text-decoration: none; }
+      .remove { padding: 0; border: 0; color: var(--muted); background: transparent; font-size: .72rem; font-weight: 800; }
+      .error { border-color: rgba(255, 130, 149, .55); color: #ffdce2; }
+      .status { min-height: 22px; margin: 12px 0 0; color: var(--muted); font-size: .77rem; }
+      .status[data-tone="success"] { color: #a6f8e7; }
+      .status[data-tone="error"] { color: #ffd1d8; }
+      @media (max-width: 800px) { .hero, .workspace { grid-template-columns: 1fr; } .settings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; } .settings h2, .settings > p { grid-column: 1 / -1; } }
+      @media (max-width: 560px) { .app { width: min(100% - 24px, 1180px); padding-top: 14px; } .topbar { align-items: flex-start; } .brand small { max-width: 180px; } .hero { padding: 26px; border-radius: 20px; } .settings { grid-template-columns: 1fr; } .summary { grid-template-columns: 1fr; } .result { grid-template-columns: 64px minmax(0, 1fr); } .preview { width: 64px; height: 54px; } .result-actions { grid-column: 2; justify-items: start; grid-template-columns: auto auto; } }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">⇣</span><span>Image Storage Optimizer<small>Browser-only compression lab</small></span></div>
+        <a class="button" href="../">← Projects</a>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">TinyPNG-style workflow · no upload</p>
+          <h1 id="page-title">Shrink images before they reach storage.</h1>
+          <p class="lead">Drop PNG, JPEG, WebP, or AVIF files. The browser decodes, resizes, and re-encodes them locally so you can compare storage cost and download optimized copies.</p>
+        </div>
+        <aside class="privacy" aria-label="Local processing notice"><span class="privacy-icon" aria-hidden="true">⌁</span><div><strong>Your images stay in this browser.</strong><p>This demo does not send image bytes to a server. Close or refresh the tab to release the generated previews and files.</p></div></aside>
+      </section>
+
+      <section class="workspace" aria-label="Image optimization workspace">
+        <div id="dropzone" class="dropzone" role="group" aria-label="Image file drop area">
+          <input id="file-input" type="file" accept="image/png,image/jpeg,image/webp,image/avif" multiple />
+          <div class="dropzone-inner"><div class="upload-icon" aria-hidden="true">⇣</div><h2>Drop images here</h2><p>or choose files from your device. Processing is sequential to keep memory use predictable for large batches.</p><button id="choose-files" class="button primary" type="button">Choose images</button> <button id="try-sample" class="button" type="button">Try generated sample</button><p class="formats">PNG · JPEG · WebP · AVIF · batch-ready</p></div>
+        </div>
+        <aside class="settings" aria-label="Optimization settings">
+          <h2>Output controls</h2><p>Choose a compact target format, scale down oversized images, and trade visual detail for storage size.</p>
+          <label>Output format<select id="format"><option value="image/webp" selected>WebP — recommended</option><option value="image/jpeg">JPEG — broad compatibility</option><option value="image/png">PNG — lossless / alpha-safe</option></select></label>
+          <label>Quality<div class="range-row"><input id="quality" type="range" min="25" max="95" value="78" /><output id="quality-value" class="value">78%</output></div></label>
+          <label>Maximum dimension<input id="max-dimension" type="number" min="320" max="8192" step="160" value="1920" /></label>
+          <p class="setting-hint">Images already below the limit keep their dimensions. PNG ignores the quality slider because it stays lossless.</p>
+        </aside>
+      </section>
+
+      <section id="summary" class="summary" aria-label="Optimization totals"><div class="metric"><strong id="original-total">0 B</strong><span>Original total</span></div><div class="metric"><strong id="optimized-total">0 B</strong><span>Optimized total</span></div><div class="metric"><strong id="savings-total">0%</strong><span>Storage reduction</span></div></section>
+
+      <section class="result-section" aria-labelledby="results-title"><div class="result-header"><div><h2 id="results-title">Optimized images</h2><p>Each output is an independent local Blob URL ready to download.</p></div><button id="clear-all" class="button" type="button" disabled>Clear results</button></div><div id="results" class="results"><p class="empty">No images yet. Add a sample image to compare the original and optimized storage size.</p></div><p id="status" class="status" aria-live="polite">Ready for images.</p></section>
+    </main>
+    <script src="./main.js?build=20260714"></script>
+  </body>
+</html>

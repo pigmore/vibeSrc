@@ -26,6 +26,10 @@ vibeSrc/
       index.html
     count-plus-one/
       index.html
+    image-storage-optimizer/
+      index.html
+      main.js
+      README.md
     nodeNote/                 # Git submodule: https://github.com/pigmore/nodeNote
     ecs-obj-editor/
       index.html
@@ -117,6 +121,7 @@ vibeSrc/
 | `roadmap.md` | Startup roadmap | Track phases and feature ideas. |
 | `index.html` | Static welcome page | Entry point for visitors and demo links. |
 | `projects/` | Static vanilla JavaScript demos | One folder per demo project. |
+| `projects/image-storage-optimizer/` | Browser image-optimization lab | Local batch resize/re-encode workflow with size comparisons and Blob downloads. |
 | `projects/nodeNote/` | NodeNote demo submodule | Tracks `https://github.com/pigmore/nodeNote`. |
 | `projects/ecs-obj-editor/` | Vanilla JavaScript 3D editor | WebGL OBJ editor with an ECS architecture. |
 | `projects/editor-command-studio/` | Editor architecture lab | Commands, history, tool plugins, state-driven inspector, and TypeScript contracts. |
